@@ -8,17 +8,27 @@ import android.content.DialogInterface;
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 import com.alterego.androidbound.ViewBinder;
 import com.alterego.androidbound.zzzztoremove.UiThreadScheduler;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.radiusnetworks.ibeacon.IBeaconManager;
 
-import lombok.Getter;
+import org.joda.time.DateTime;
+import org.joda.time.format.ISODateTimeFormat;
 
+import lombok.Getter;
+import lombok.experimental.Accessors;
+
+@Accessors(prefix="m")
 public class SettingsManager {
 
     @Getter private final Application mParentApplication;
     private final ViewBinder mViewBinder;
     @Getter private final IAndroidLogger mLogger;
+    private static DateTimeSerializer dateSerializer = new DateTimeSerializer(ISODateTimeFormat.dateTimeParser().withZoneUTC());
+    //private BindingValueConverters mDefaultValueConverters;
+    @Getter private Gson mGson = new GsonBuilder().registerTypeAdapter(DateTime.class, dateSerializer).create();
     private final BeaconConsumer mBeaconConsumer;
-    @Getter private IBeaconManager iBeaconManager;
+    @Getter private IBeaconManager mBeaconManager;
     public static final String MMBeaconProximityUUID = "e2c56db5-dffb-48d2-b060-d0f5a71096e0";
     public static final int MMBeaconMajor = 0;
     public static final int MMBeaconMinor = 0;
@@ -39,16 +49,16 @@ public class SettingsManager {
 
     public void setActivity (Activity act) {
         mActivity = act;
-        //iBeaconManager.bind(mBeaconConsumer);
+        //mBeaconManager.bind(mBeaconConsumer);
     }
 
     public void setupBluetooth(Application app) {
-        iBeaconManager = IBeaconManager.getInstanceForApplication(app);
+        mBeaconManager = IBeaconManager.getInstanceForApplication(app);
         verifyBluetooth();
-        iBeaconManager.setBackgroundBetweenScanPeriod(Settings.DEFAULT_BACKGROUND_BETWEEN_SCAN_PERIOD);
-        iBeaconManager.setBackgroundScanPeriod(Settings.DEFAULT_BACKGROUND_SCAN_PERIOD);
-        iBeaconManager.setForegroundBetweenScanPeriod(Settings.DEFAULT_FOREGROUND_BETWEEN_SCAN_PERIOD);
-        iBeaconManager.setForegroundScanPeriod(Settings.DEFAULT_FOREGROUND_SCAN_PERIOD);
+        mBeaconManager.setBackgroundBetweenScanPeriod(Settings.DEFAULT_BACKGROUND_BETWEEN_SCAN_PERIOD);
+        mBeaconManager.setBackgroundScanPeriod(Settings.DEFAULT_BACKGROUND_SCAN_PERIOD);
+        mBeaconManager.setForegroundBetweenScanPeriod(Settings.DEFAULT_FOREGROUND_BETWEEN_SCAN_PERIOD);
+        mBeaconManager.setForegroundScanPeriod(Settings.DEFAULT_FOREGROUND_SCAN_PERIOD);
     }
 
     private void verifyBluetooth() {
@@ -85,19 +95,19 @@ public class SettingsManager {
 
 
     public void bindBluetooth () {
-        iBeaconManager.bind(mBeaconConsumer);
+        mBeaconManager.bind(mBeaconConsumer);
     }
 
     public void unBindBluetooth () {
-        iBeaconManager.unBind(mBeaconConsumer);
+        mBeaconManager.unBind(mBeaconConsumer);
     }
 
     protected void pauseBluetooth() {
-        if (iBeaconManager.isBound(mBeaconConsumer)) iBeaconManager.setBackgroundMode(mBeaconConsumer, true);
+        if (mBeaconManager.isBound(mBeaconConsumer)) mBeaconManager.setBackgroundMode(mBeaconConsumer, true);
     }
 
     protected void resumeBluetooth() {
-        if (iBeaconManager.isBound(mBeaconConsumer)) iBeaconManager.setBackgroundMode(mBeaconConsumer, false);
+        if (mBeaconManager.isBound(mBeaconConsumer)) mBeaconManager.setBackgroundMode(mBeaconConsumer, false);
     }
 
 
