@@ -28,6 +28,9 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        System.setProperty("org.joda.time.DateTimeZone.Provider", "com.alterego.ibeaconapp.app.helpers.FastDateTimeZoneProvider");
+
         mSettingsManager = MainApplication.instance.getSettingsManager();
         mSettingsManager.setParentActivity(this);
         mSettingsManager.setActionBarTitleHandler(this);
