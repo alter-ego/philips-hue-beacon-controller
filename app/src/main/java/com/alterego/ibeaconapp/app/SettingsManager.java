@@ -8,8 +8,11 @@ import android.content.DialogInterface;
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 import com.alterego.androidbound.ViewBinder;
 import com.alterego.androidbound.zzzztoremove.UiThreadScheduler;
+import com.alterego.ibeaconapp.app.data.hue.HueBridgeManager;
+import com.alterego.ibeaconapp.app.data.hue.api.NuPNPApiManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.radiusnetworks.ibeacon.IBeaconManager;
 
 import org.joda.time.DateTime;
@@ -22,9 +25,11 @@ import lombok.experimental.Accessors;
 public class SettingsManager {
 
     @Getter private final Application mParentApplication;
-    private final ViewBinder mViewBinder;
+    @Getter private final ViewBinder mViewBinder;
     @Getter private final IAndroidLogger mLogger;
     private static DateTimeSerializer dateSerializer = new DateTimeSerializer(ISODateTimeFormat.dateTimeParser().withZoneUTC());
+    @Getter private final ImageLoaderConfiguration mImageLoaderConfiguration;
+    @Getter private final HueBridgeManager mHueBridgeManager;
     //private BindingValueConverters mDefaultValueConverters;
     @Getter private Gson mGson = new GsonBuilder().registerTypeAdapter(DateTime.class, dateSerializer).create();
     private final BeaconConsumer mBeaconConsumer;
@@ -32,14 +37,23 @@ public class SettingsManager {
     public static final String MMBeaconProximityUUID = "e2c56db5-dffb-48d2-b060-d0f5a71096e0";
     public static final int MMBeaconMajor = 0;
     public static final int MMBeaconMinor = 0;
-    private Activity mActivity;
+    @Getter private Activity mParentActivity;
 
-    public SettingsManager (Application app, IAndroidLogger logger, IAndroidLogger viewbinder_logger) {
+    //API Managers
+    @Getter private NuPNPApiManager mNuPNPApiManager;
+    private BindingValueConverters mDefaultValueConverters;
+
+    public SettingsManager (Application app, IAndroidLogger logger, IAndroidLogger viewbinder_logger, ImageLoaderConfiguration imageLoaderConfig) {
+
         setupBluetooth(app);
         mLogger = logger;
         mParentApplication  = app;
-        mViewBinder = new ViewBinder(app, UiThreadScheduler.instance, mLogger);
+        mImageLoaderConfiguration = imageLoaderConfig;
+        mViewBinder = new ViewBinder(app, UiThreadScheduler.instance, viewbinder_logger, getImageLoaderConfiguration());
         mBeaconConsumer = new BeaconConsumer(this);
+        mHueBridgeManager = new HueBridgeManager(this);
+
+        setupManagers ();
 //        mReaderServerService = createReaderServerService(app, getGson());
 //        mReaderServerApiManager = new ReaderServerApiManager(this);
 //        mCurrentLanguage = checkLanguage();
@@ -47,9 +61,18 @@ public class SettingsManager {
 //        mReaderFragmentFactory = new ReaderFragmentFactory(this, R.id.container);
     }
 
-    public void setActivity (Activity act) {
-        mActivity = act;
+    public void setParentActivity (Activity act) {
+        mParentActivity = act;
         //mBeaconManager.bind(mBeaconConsumer);
+        if (mDefaultValueConverters == null) {
+            mDefaultValueConverters = new BindingValueConverters(act, this);
+        } else {
+            mDefaultValueConverters.setParentActivity(act);
+        }
+    }
+
+    private void setupManagers () {
+        mNuPNPApiManager = new NuPNPApiManager(this);
     }
 
     public void setupBluetooth(Application app) {

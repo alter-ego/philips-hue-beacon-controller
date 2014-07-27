@@ -27,7 +27,7 @@ public class BeaconConsumer implements IBeaconConsumer {
     public void onIBeaconServiceConnect() {
 
         //monitoring
-        mSettingsManager.getIBeaconManager().setMonitorNotifier(new MonitorNotifier() {
+        mSettingsManager.getBeaconManager().setMonitorNotifier(new MonitorNotifier() {
             @Override
             public void didEnterRegion(Region region) {
                 logToDisplayMonitoring("I just saw an iBeacon named " + region.getUniqueId() + " for the first time!");
@@ -48,7 +48,7 @@ public class BeaconConsumer implements IBeaconConsumer {
 
         //ranging
 
-        mSettingsManager.getIBeaconManager().setRangeNotifier(new RangeNotifier() {
+        mSettingsManager.getBeaconManager().setRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<IBeacon> iBeacons, Region region) {
                 if (iBeacons.size() > 0) {
@@ -74,34 +74,34 @@ public class BeaconConsumer implements IBeaconConsumer {
         try {
             Region myMonitoringRegion = new Region("MMMonitoringRegion", SettingsManager.MMBeaconProximityUUID.toLowerCase(), SettingsManager.MMBeaconMajor, SettingsManager.MMBeaconMinor);
             Region myRangingRegion = new Region("MMRangingRegion", SettingsManager.MMBeaconProximityUUID.toLowerCase(), SettingsManager.MMBeaconMajor, SettingsManager.MMBeaconMinor);
-            mSettingsManager.getIBeaconManager().startMonitoringBeaconsInRegion(myMonitoringRegion);
-            mSettingsManager.getIBeaconManager().startRangingBeaconsInRegion(myRangingRegion);
+            mSettingsManager.getBeaconManager().startMonitoringBeaconsInRegion(myMonitoringRegion);
+            mSettingsManager.getBeaconManager().startRangingBeaconsInRegion(myRangingRegion);
 
         } catch (RemoteException e) {
-            mSettingsManager.getMLogger().error("BeaconConsumer remote exception = " + e.getMessage());
+            mSettingsManager.getLogger().error("BeaconConsumer remote exception = " + e.getMessage());
         }
     }
 
     @Override
     public Context getApplicationContext() {
-        return null;
+        return mSettingsManager.getParentApplication();
     }
 
     @Override
     public void unbindService(ServiceConnection serviceConnection) {
-
+        mSettingsManager.getParentActivity().unbindService(serviceConnection);
     }
 
     @Override
     public boolean bindService(Intent intent, ServiceConnection serviceConnection, int i) {
-        return false;
+        return mSettingsManager.getParentActivity().bindService(intent, serviceConnection, i);
     }
 
     private void logToDisplayMonitoring(final String line) {
-        mSettingsManager.getMLogger().info("BeaconConsumer monitoring = " + line);
+        mSettingsManager.getLogger().info("BeaconConsumer monitoring = " + line);
     }
 
     private void logToDisplayRanging(final String line) {
-        mSettingsManager.getMLogger().info("BeaconConsumer ranging = " + line);
+        mSettingsManager.getLogger().info("BeaconConsumer ranging = " + line);
     }
 }
