@@ -1,5 +1,5 @@
 
-package com.alterego.ibeaconapp.app.data.hue;
+package com.alterego.ibeaconapp.app.data.hue.data;
 
 import com.google.gson.annotations.SerializedName;
 
