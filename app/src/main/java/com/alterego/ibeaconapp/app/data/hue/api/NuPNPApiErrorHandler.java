@@ -1,6 +1,7 @@
 package com.alterego.ibeaconapp.app.data.hue.api;
 
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
+import com.alterego.ibeaconapp.app.helpers.GeneralHelper;
 
 import retrofit.ErrorHandler;
 import retrofit.RetrofitError;
@@ -29,9 +30,9 @@ class NuPNPApiErrorHandler implements ErrorHandler {
 
         public NuPNPApiException(RetrofitError cause) {
             try {
-                mLogger.error("NuPNPApiException error = " + cause.getMessage() + ", response = " + cause.getResponse().getBody().in().toString());
+                mLogger.error("NuPNPApiException error = " + cause.getMessage() + ", response = " + GeneralHelper.slurp(cause.getResponse().getBody().in()));
             } catch (Exception e) {
-                mLogger.error("NuPNPApiException error = " + cause.getMessage() + ", can't read the response!");
+                mLogger.error("NuPNPApiException error = " + cause + ", can't read the response!");
             }
         }
     }

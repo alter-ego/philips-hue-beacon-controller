@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.WindowManager;
 
 import com.alterego.ibeaconapp.app.SettingsManager;
@@ -15,6 +16,11 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -102,6 +108,37 @@ public class GeneralHelper {
         SimpleDateFormat sdf = (SimpleDateFormat)java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM, locale);
         sdf.applyPattern(sdf.toPattern().replaceAll("([^\\p{Alpha}']|('[\\p{Alpha}]+'))*y+([^\\p{Alpha}']|('[\\p{Alpha}]+'))*", ""));
         return sdf;
+    }
+
+    public static String slurp(final InputStream is) {
+        return slurp(is, 8192);
+    }
+
+    public static String slurp(final InputStream is, final int bufferSize)
+    {
+        final char[] buffer = new char[bufferSize];
+        final StringBuilder out = new StringBuilder();
+        try {
+            final Reader in = new InputStreamReader(is, "UTF-8");
+            try {
+                for (;;) {
+                    int rsz = in.read(buffer, 0, buffer.length);
+                    if (rsz < 0)
+                        break;
+                    out.append(buffer, 0, rsz);
+                }
+            }
+            finally {
+                in.close();
+            }
+        }
+        catch (UnsupportedEncodingException ex) {
+            Log.e("GeneralHelper", "exception slurping stream UnsupportedEncodingException = " + ex.getMessage());
+        }
+        catch (IOException ex) {
+            Log.e("GeneralHelper", "exception slurping stream IOException = " + ex.getMessage());
+        }
+        return out.toString();
     }
 
 
