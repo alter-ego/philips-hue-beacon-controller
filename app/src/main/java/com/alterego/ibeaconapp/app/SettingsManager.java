@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 import com.alterego.androidbound.ViewBinder;
 import com.alterego.androidbound.zzzztoremove.UiThreadScheduler;
 import com.alterego.ibeaconapp.app.data.hue.HueBridgeManager;
 import com.alterego.ibeaconapp.app.data.hue.api.NuPNPApiManager;
+import com.alterego.ibeaconapp.app.interfaces.IActionBarTitleHandler;
+import com.alterego.ibeaconapp.app.interfaces.INavigationDrawerHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -19,6 +22,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Accessors(prefix="m")
@@ -30,7 +34,6 @@ public class SettingsManager {
     private static DateTimeSerializer dateSerializer = new DateTimeSerializer(ISODateTimeFormat.dateTimeParser().withZoneUTC());
     @Getter private final ImageLoaderConfiguration mImageLoaderConfiguration;
     @Getter private final HueBridgeManager mHueBridgeManager;
-    //private BindingValueConverters mDefaultValueConverters;
     @Getter private Gson mGson = new GsonBuilder().registerTypeAdapter(DateTime.class, dateSerializer).create();
     private final BeaconConsumer mBeaconConsumer;
     @Getter private IBeaconManager mBeaconManager;
@@ -38,6 +41,9 @@ public class SettingsManager {
     public static final int MMBeaconMajor = 0;
     public static final int MMBeaconMinor = 0;
     @Getter private Activity mParentActivity;
+    @Getter @Setter private INavigationDrawerHandler mNavigationDrawerHandler;
+    @Getter @Setter private IActionBarTitleHandler mActionBarTitleHandler;
+    @Getter private BeaconFragmentFactory mBeaconFragmentFactory;
 
     //API Managers
     @Getter private NuPNPApiManager mNuPNPApiManager;
@@ -50,20 +56,18 @@ public class SettingsManager {
         mParentApplication  = app;
         mImageLoaderConfiguration = imageLoaderConfig;
         mViewBinder = new ViewBinder(app, UiThreadScheduler.instance, viewbinder_logger, getImageLoaderConfiguration());
+        mViewBinder.getFontManager().setDefaultFont(Typeface.createFromAsset(mParentApplication.getAssets(), "roboto_thin.ttf"));
+        //mViewBinder.getFontManager().registerFont("");
         mBeaconConsumer = new BeaconConsumer(this);
         mHueBridgeManager = new HueBridgeManager(this);
 
         setupManagers ();
-//        mReaderServerService = createReaderServerService(app, getGson());
-//        mReaderServerApiManager = new ReaderServerApiManager(this);
-//        mCurrentLanguage = checkLanguage();
-//        mCurrentConfig = new ReaderConfig(); //TODO add reading this from the server, asynchronously; also add default config to assets
-//        mReaderFragmentFactory = new ReaderFragmentFactory(this, R.id.container);
     }
 
     public void setParentActivity (Activity act) {
         mParentActivity = act;
-        //mBeaconManager.bind(mBeaconConsumer);
+
+
         if (mDefaultValueConverters == null) {
             mDefaultValueConverters = new BindingValueConverters(act, this);
         } else {
@@ -73,6 +77,7 @@ public class SettingsManager {
 
     private void setupManagers () {
         mNuPNPApiManager = new NuPNPApiManager(this);
+        mBeaconFragmentFactory = new BeaconFragmentFactory (this, R.id.container);
     }
 
     public void setupBluetooth(Application app) {

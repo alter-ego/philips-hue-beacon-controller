@@ -1,22 +1,26 @@
 package com.alterego.ibeaconapp.app;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.alterego.ibeaconapp.app.fragments.FragmentHome;
+import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
+import com.alterego.ibeaconapp.app.interfaces.IActionBarTitleHandler;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements IActionBarTitleHandler {
+
+    public static final String SAVED_TITLE = "saved_title";
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private SettingsManager mSettingsManager;
+    private ActionBar mActionBar;
+    private IAndroidLogger mLogger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,55 +28,34 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
         mSettingsManager = MainApplication.instance.getSettingsManager();
         mSettingsManager.setParentActivity(this);
+        mSettingsManager.setActionBarTitleHandler(this);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+        mActionBar = getSupportActionBar();
+        mLogger = mSettingsManager.getLogger();
+
+        if (savedInstanceState != null) {
+            mTitle = savedInstanceState.getString(SAVED_TITLE);
+        } else
+            mTitle = getTitle();
+
         mSettingsManager.bindBluetooth();
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, FragmentHome.newInstance())
-                .commit();
-    }
-
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
-        }
-    }
-
-    public void restoreActionBar() {
+     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
+        setActionBarTitle(mTitle);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
             return true;
@@ -82,9 +65,6 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
@@ -106,6 +86,22 @@ public class MainActivity extends ActionBarActivity
     protected void onResume() {
         super.onResume();
         mSettingsManager.resumeBluetooth();
+        mSettingsManager.getNavigationDrawerHandler().openLastOpenedItem();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(SAVED_TITLE, mTitle.toString());
+    }
+
+    @Override
+    public void setActionBarTitle(CharSequence title) {
+        mLogger.verbose("setActionBarTitle title = " + title);
+        if (title != null)
+            mTitle = title;
+
+        if (mActionBar != null)
+            mActionBar.setTitle(mTitle);
+    }
 }
