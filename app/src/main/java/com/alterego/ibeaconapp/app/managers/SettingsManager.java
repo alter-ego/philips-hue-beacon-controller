@@ -1,4 +1,4 @@
-package com.alterego.ibeaconapp.app;
+package com.alterego.ibeaconapp.app.managers;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,8 +9,13 @@ import android.graphics.Typeface;
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 import com.alterego.androidbound.ViewBinder;
 import com.alterego.androidbound.zzzztoremove.UiThreadScheduler;
-import com.alterego.ibeaconapp.app.data.hue.HueBridgeManager;
-import com.alterego.ibeaconapp.app.data.hue.api.NuPNPApiManager;
+import com.alterego.ibeaconapp.app.beacon.BeaconConsumer;
+import com.alterego.ibeaconapp.app.helpers.BindingValueConverters;
+import com.alterego.ibeaconapp.app.R;
+import com.alterego.ibeaconapp.app.Settings;
+import com.alterego.ibeaconapp.app.hue.HueBridgeManager;
+import com.alterego.ibeaconapp.app.hue.api.NuPNPApiManager;
+import com.alterego.ibeaconapp.app.helpers.DateTimeSerializer;
 import com.alterego.ibeaconapp.app.interfaces.IActionBarTitleHandler;
 import com.alterego.ibeaconapp.app.interfaces.INavigationDrawerHandler;
 import com.google.gson.Gson;
@@ -130,11 +135,11 @@ public class SettingsManager {
         mBeaconManager.unBind(mBeaconConsumer);
     }
 
-    protected void pauseBluetooth() {
+    public void pauseBluetooth() {
         if (mBeaconManager.isBound(mBeaconConsumer)) mBeaconManager.setBackgroundMode(mBeaconConsumer, true);
     }
 
-    protected void resumeBluetooth() {
+    public void resumeBluetooth() {
         if (mBeaconManager.isBound(mBeaconConsumer)) mBeaconManager.setBackgroundMode(mBeaconConsumer, false);
     }
 

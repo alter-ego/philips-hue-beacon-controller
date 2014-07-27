@@ -3,8 +3,8 @@ package com.alterego.ibeaconapp.app.viewmodels;
 import android.view.View;
 
 import com.alterego.androidbound.ViewModel;
-import com.alterego.ibeaconapp.app.SettingsManager;
-import com.alterego.ibeaconapp.app.data.hue.data.HueBridgeNuPNPInfo;
+import com.alterego.ibeaconapp.app.managers.SettingsManager;
+import com.alterego.ibeaconapp.app.hue.data.HueBridgeNuPNPInfo;
 
 import java.util.List;
 

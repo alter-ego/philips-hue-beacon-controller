@@ -1,11 +1,12 @@
-package com.alterego.ibeaconapp.app;
+package com.alterego.ibeaconapp.app.beacon;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.RemoteException;
 
-import com.alterego.ibeaconapp.app.data.Beacon;
+import com.alterego.ibeaconapp.app.beacon.data.Beacon;
+import com.alterego.ibeaconapp.app.managers.SettingsManager;
 import com.radiusnetworks.ibeacon.IBeacon;
 import com.radiusnetworks.ibeacon.IBeaconConsumer;
 import com.radiusnetworks.ibeacon.MonitorNotifier;

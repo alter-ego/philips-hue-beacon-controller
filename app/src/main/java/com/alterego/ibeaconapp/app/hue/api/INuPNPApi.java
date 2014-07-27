@@ -1,7 +1,7 @@
-package com.alterego.ibeaconapp.app.data.hue.api;
+package com.alterego.ibeaconapp.app.hue.api;
 
 
-import com.alterego.ibeaconapp.app.data.hue.data.HueBridgeNuPNPInfo;
+import com.alterego.ibeaconapp.app.hue.data.HueBridgeNuPNPInfo;
 
 import java.util.List;
 

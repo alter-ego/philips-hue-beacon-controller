@@ -1,4 +1,4 @@
-package com.alterego.ibeaconapp.app;
+package com.alterego.ibeaconapp.app.helpers;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,8 +7,8 @@ import com.alterego.advancedandroidlogger.implementations.NullAndroidLogger;
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 import com.alterego.androidbound.ViewBinder;
 import com.alterego.androidbound.interfaces.IValueConverter;
-import com.alterego.ibeaconapp.app.data.hue.data.HueBridgeNuPNPInfo;
-import com.alterego.ibeaconapp.app.helpers.GeneralHelper;
+import com.alterego.ibeaconapp.app.hue.data.HueBridgeNuPNPInfo;
+import com.alterego.ibeaconapp.app.managers.SettingsManager;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;

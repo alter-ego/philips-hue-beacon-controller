@@ -1,8 +1,8 @@
 package com.alterego.ibeaconapp.app.viewmodels;
 
 import com.alterego.androidbound.ViewModel;
-import com.alterego.ibeaconapp.app.BeaconFragmentFactory;
-import com.alterego.ibeaconapp.app.SettingsManager;
+import com.alterego.ibeaconapp.app.managers.BeaconFragmentFactory;
+import com.alterego.ibeaconapp.app.managers.SettingsManager;
 
 import java.util.List;
 

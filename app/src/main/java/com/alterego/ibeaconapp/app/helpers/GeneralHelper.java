@@ -8,7 +8,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.alterego.ibeaconapp.app.SettingsManager;
+import com.alterego.ibeaconapp.app.managers.SettingsManager;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;

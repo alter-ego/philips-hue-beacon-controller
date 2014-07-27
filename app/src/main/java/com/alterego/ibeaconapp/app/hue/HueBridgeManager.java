@@ -1,8 +1,8 @@
-package com.alterego.ibeaconapp.app.data.hue;
+package com.alterego.ibeaconapp.app.hue;
 
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
-import com.alterego.ibeaconapp.app.SettingsManager;
-import com.alterego.ibeaconapp.app.data.hue.data.HueBridgeNuPNPInfo;
+import com.alterego.ibeaconapp.app.managers.SettingsManager;
+import com.alterego.ibeaconapp.app.hue.data.HueBridgeNuPNPInfo;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,10 +1,11 @@
-package com.alterego.ibeaconapp.app;
+package com.alterego.ibeaconapp.app.managers;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 
 import com.alterego.ibeaconapp.app.fragments.FragmentHome;
+import com.alterego.ibeaconapp.app.managers.SettingsManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;

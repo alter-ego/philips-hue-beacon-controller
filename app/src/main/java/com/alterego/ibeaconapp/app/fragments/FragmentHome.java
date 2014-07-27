@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.alterego.ibeaconapp.app.MainApplication;
 import com.alterego.ibeaconapp.app.R;
-import com.alterego.ibeaconapp.app.SettingsManager;
+import com.alterego.ibeaconapp.app.managers.SettingsManager;
 import com.alterego.ibeaconapp.app.viewmodels.ViewModelHome;
 
 

@@ -1,4 +1,4 @@
-package com.alterego.ibeaconapp.app;
+package com.alterego.ibeaconapp.app.fragments;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -19,6 +19,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.alterego.ibeaconapp.app.MainApplication;
+import com.alterego.ibeaconapp.app.R;
+import com.alterego.ibeaconapp.app.managers.SettingsManager;
 import com.alterego.ibeaconapp.app.interfaces.INavigationDrawerHandler;
 import com.alterego.ibeaconapp.app.viewmodels.NavigationDrawerViewModel;
 

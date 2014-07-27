@@ -3,6 +3,7 @@ package com.alterego.ibeaconapp.app;
 import android.app.Application;
 import com.alterego.advancedandroidlogger.implementations.DetailedAndroidLogger;
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
+import com.alterego.ibeaconapp.app.managers.SettingsManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 

@@ -8,7 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
+import com.alterego.ibeaconapp.app.fragments.NavigationDrawerFragment;
 import com.alterego.ibeaconapp.app.interfaces.IActionBarTitleHandler;
+import com.alterego.ibeaconapp.app.managers.SettingsManager;
 
 
 public class MainActivity extends ActionBarActivity
