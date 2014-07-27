@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.alterego.androidbound.ViewModel;
 import com.alterego.ibeaconapp.app.managers.SettingsManager;
-import com.alterego.ibeaconapp.app.hue.data.HueBridgeNuPNPInfo;
+import com.alterego.ibeaconapp.app.hue.data.HueBridgeInfo;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import rx.schedulers.Schedulers;
 public class ViewModelHome extends ViewModel {
 
     private final SettingsManager mSettingsManager;
-    private List<HueBridgeNuPNPInfo> mHueBridges;
+    private List<HueBridgeInfo> mHueBridges;
     private View mView;
 
     public ViewModelHome (SettingsManager mgr) {
@@ -30,15 +30,15 @@ public class ViewModelHome extends ViewModel {
         return true;
     }
 
-    public void doOpenBridge (HueBridgeNuPNPInfo bridgeNuPNPInfo) {
+    public void doOpenBridge (HueBridgeInfo bridgeNuPNPInfo) {
         //TODO doOpenBridge
     }
 
-    public List<HueBridgeNuPNPInfo> getSavedBridges () {
+    public List<HueBridgeInfo> getSavedBridges () {
         return mHueBridges;
     }
 
-    public void setSavedBridges (List<HueBridgeNuPNPInfo> bridges) {
+    public void setSavedBridges (List<HueBridgeInfo> bridges) {
         mHueBridges = bridges;
         raisePropertyChanged("SavedBridges");
         setHasSavedBridges();
@@ -62,7 +62,7 @@ public class ViewModelHome extends ViewModel {
                 .findLocalBridges()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<HueBridgeNuPNPInfo>>() {
+                .subscribe(new Observer<List<HueBridgeInfo>>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -73,7 +73,7 @@ public class ViewModelHome extends ViewModel {
                     }
 
                     @Override
-                    public void onNext(List<HueBridgeNuPNPInfo> hueBridgeNuPNPInfoList) {
+                    public void onNext(List<HueBridgeInfo> hueBridgeNuPNPInfoList) {
                         mLogger.info("doLookForLocalHueBridges onNext hueBridgeNuPNPInfoList = " + hueBridgeNuPNPInfoList.toString());
                         setSavedBridges(hueBridgeNuPNPInfoList);
                         mSettingsManager.getHueBridgeManager().setLastHueBridges(hueBridgeNuPNPInfoList);

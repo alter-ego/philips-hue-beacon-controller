@@ -1,9 +1,9 @@
 package com.alterego.ibeaconapp.app.hue.api;
 
 import com.alterego.ibeaconapp.app.R;
-import com.alterego.ibeaconapp.app.managers.SettingsManager;
-import com.alterego.ibeaconapp.app.hue.data.HueBridgeNuPNPInfo;
+import com.alterego.ibeaconapp.app.hue.data.HueBridgeInfo;
 import com.alterego.ibeaconapp.app.interfaces.IDisposable;
+import com.alterego.ibeaconapp.app.managers.SettingsManager;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class NuPNPApiManager implements IDisposable {
         mNuPNPApiService = restAdapter.create(INuPNPApi.class);
     }
 
-    public Observable<List<HueBridgeNuPNPInfo>> findLocalBridges () {
+    public Observable<List<HueBridgeInfo>> findLocalBridges () {
 
         mSettingsManager.getLogger().debug("LifesumApiManager findLocalBridges");
         return mNuPNPApiService.getNuPNPBridgeInfo();

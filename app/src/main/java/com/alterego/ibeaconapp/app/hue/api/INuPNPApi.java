@@ -1,7 +1,7 @@
 package com.alterego.ibeaconapp.app.hue.api;
 
 
-import com.alterego.ibeaconapp.app.hue.data.HueBridgeNuPNPInfo;
+import com.alterego.ibeaconapp.app.hue.data.HueBridgeInfo;
 
 import java.util.List;
 
@@ -11,6 +11,6 @@ import rx.Observable;
 public interface INuPNPApi {
 
     @GET("/api/nupnp")
-    Observable<List<HueBridgeNuPNPInfo>> getNuPNPBridgeInfo();
+    Observable<List<HueBridgeInfo>> getNuPNPBridgeInfo();
 
 }

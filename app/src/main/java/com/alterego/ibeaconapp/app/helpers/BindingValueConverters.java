@@ -7,7 +7,7 @@ import com.alterego.advancedandroidlogger.implementations.NullAndroidLogger;
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 import com.alterego.androidbound.ViewBinder;
 import com.alterego.androidbound.interfaces.IValueConverter;
-import com.alterego.ibeaconapp.app.hue.data.HueBridgeNuPNPInfo;
+import com.alterego.ibeaconapp.app.hue.data.HueBridgeInfo;
 import com.alterego.ibeaconapp.app.managers.SettingsManager;
 
 import org.joda.time.DateTime;
@@ -60,7 +60,7 @@ public class BindingValueConverters {
 
         @Override
         public Object convert(Object value, Class<?> targetType, Object parameter, Locale culture) {
-            HueBridgeNuPNPInfo bridge = (HueBridgeNuPNPInfo) value;
+            HueBridgeInfo bridge = (HueBridgeInfo) value;
             mLogger.debug("BridgeNumberInList bridge = " + bridge.toString());
             return mSettingsManager.getHueBridgeManager().getHueBridgePosition(bridge);
         }

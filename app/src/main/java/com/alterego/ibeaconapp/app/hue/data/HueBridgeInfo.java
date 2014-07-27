@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @ToString
-public class HueBridgeNuPNPInfo {
+public class HueBridgeInfo {
 
     @Getter @Setter public String id;
 
