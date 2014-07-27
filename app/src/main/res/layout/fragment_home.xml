@@ -1,13 +1,30 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.alterego.ibeaconapp.app.FragmentHome">
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="com.alterego.ibeaconapp.app.fragments.FragmentHome"
+    tools:ignore="MissingPrefix">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
+        binding="{Click &lt;- OpenBridge}; {ItemsSource &lt;= SavedBridges}; {Visibility &lt;= ToVisibility(HasSavedBridges)};"
+        itemTemplate="@layout/fragment_home_bridgeslistview_item"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="300dp"
+        android:id="@+id/bridgesListView"
+        android:layout_margin="5dp"
+        >
+    </ListView>
 
-</FrameLayout>
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="50dp"
+        binding="{Click &lt;- LookForLocalHueBridges}"
+        android:text="@string/fragment_home_button_lookforlocalbridges"
+        />
+
+</LinearLayout>

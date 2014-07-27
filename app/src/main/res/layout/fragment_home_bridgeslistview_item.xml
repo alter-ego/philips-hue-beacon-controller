@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    tools:ignore="MissingPrefix"
+    >
+
+    <TextView
+        android:id="@+id/bridge_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="50sp"
+        binding="{ Text &lt;= BridgeNumberInList(this) }"
+        android:textStyle="italic"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:textColor="@android:color/black"
+        />
+
+    <TextView
+        android:id="@+id/bridge_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        binding="{ Text &lt;= name }"
+        android:layout_toRightOf="@id/bridge_number"
+        android:text="Bridge name"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_alignTop="@id/bridge_number"
+        android:textColor="@android:color/black"
+        />
+
+    <TextView
+        android:id="@+id/bridge_ip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        binding="{ Text &lt;= internalIPAddress }"
+        android:layout_toRightOf="@id/bridge_number"
+        android:text="192.168.0.1"
+        android:textSize="20sp"
+        android:layout_below="@id/bridge_name"
+        android:layout_alignBottom="@id/bridge_number"
+        android:textColor="@android:color/black"
+        />
+
+
+</RelativeLayout>
