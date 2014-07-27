@@ -88,10 +88,10 @@ public class SettingsManager {
     public void setupBluetooth(Application app) {
         mBeaconManager = IBeaconManager.getInstanceForApplication(app);
         verifyBluetooth();
-        mBeaconManager.setBackgroundBetweenScanPeriod(Settings.DEFAULT_BACKGROUND_BETWEEN_SCAN_PERIOD);
-        mBeaconManager.setBackgroundScanPeriod(Settings.DEFAULT_BACKGROUND_SCAN_PERIOD);
-        mBeaconManager.setForegroundBetweenScanPeriod(Settings.DEFAULT_FOREGROUND_BETWEEN_SCAN_PERIOD);
-        mBeaconManager.setForegroundScanPeriod(Settings.DEFAULT_FOREGROUND_SCAN_PERIOD);
+        mBeaconManager.setBackgroundBetweenScanPeriod(app.getResources().getInteger(R.integer.default_background_between_scan_period_in_ms));
+        mBeaconManager.setBackgroundScanPeriod(app.getResources().getInteger(R.integer.default_background_scan_period_in_ms));
+        mBeaconManager.setForegroundBetweenScanPeriod(app.getResources().getInteger(R.integer.default_foreground_between_scan_period_in_ms));
+        mBeaconManager.setForegroundScanPeriod(app.getResources().getInteger(R.integer.default_foreground_scan_period_in_ms));
     }
 
     private void verifyBluetooth() {

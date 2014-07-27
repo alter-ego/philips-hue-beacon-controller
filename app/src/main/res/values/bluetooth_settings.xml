@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The default duration in milliseconds of the bluetooth scan cycle -->
+    <integer name="default_foreground_scan_period_in_ms">1100</integer>
+    <!-- The default duration in milliseconds spent not scanning between each bluetooth scan cycle -->
+    <integer name="default_foreground_between_scan_period_in_ms">100</integer>
+    <!-- The default duration in milliseconds of the bluetooth scan cycle when no ranging/monitoring clients are in the foreground -->
+    <integer name="default_background_scan_period_in_ms">2500</integer>
+    <!-- The default duration in milliseconds spent not scanning between each bluetooth scan cycle when no ranging/monitoring clients are in the foreground -->
+    <integer name="default_background_between_scan_period_in_ms">60000</integer> <!-- 60 seconds -->
+</resources>
