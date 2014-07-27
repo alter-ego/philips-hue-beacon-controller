@@ -1,9 +1,13 @@
 <ListView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_listview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:choiceMode="singleChoice"
     android:divider="@android:color/transparent"
     android:dividerHeight="0dp"
     android:background="#cccc"
+    binding="{Click &lt;- SelectMenuItem}; {ItemsSource &lt;= NavigationList}"
+    itemTemplate="@layout/fragment_navigation_drawer_menuitem"
+    tools:ignore="MissingPrefix"
     tools:context=".NavigationDrawerFragment" />

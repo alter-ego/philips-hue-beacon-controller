@@ -23,7 +23,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_margin="50dp"
-        binding="{Click &lt;- LookForLocalHueBridges}"
+        binding="{Click &lt;- LookForLocalHueBridges}; {Typeface &lt;- ToFont(this, &apos;default&apos;)}"
         android:text="@string/fragment_home_button_lookforlocalbridges"
         />
 

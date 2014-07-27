@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:padding="10dp"
+    >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_centerVertical="true"
+        android:text="title"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        binding="{ Text &lt;= this }; {Typeface &lt;- ToFont(this, &apos;default&apos;)}"
+        tools:ignore="MissingPrefix" />
+
+</RelativeLayout>
