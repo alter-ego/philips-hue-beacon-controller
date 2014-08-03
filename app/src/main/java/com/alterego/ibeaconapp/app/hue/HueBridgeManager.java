@@ -14,6 +14,7 @@ public class HueBridgeManager {
 
     private List<HueBridgeInfo> mLastHueBridges = new ArrayList<HueBridgeInfo>();
     private HueBridgeInfo mLastAccessedHueBridge;
+    private String mLastHueBridgeUsername;
 
     public HueBridgeManager (SettingsManager mgr) {
         mSettingsManager = mgr;
@@ -38,8 +39,10 @@ public class HueBridgeManager {
     }
 
     public HueBridgeInfo getLastAccessedHueBridge () {
-        if (mLastAccessedHueBridge == null) {
+        if (mLastAccessedHueBridge == null && mSettingsManager.getStoredPreferencesHelper().storesLastAccessedHueBridge()) {
             //TODO try to read mLastAccessedHueBridge from the preferences/db
+            String last_accessed_bridge_id = mSettingsManager.getStoredPreferencesHelper().restoreLastAccessedHueBridge();
+            //try to find it in the DB
         }
         mLogger.debug("getLastAccessedHueBridge mLastAccessedHueBridge = " + mLastAccessedHueBridge.toString());
         return mLastAccessedHueBridge;
@@ -48,6 +51,21 @@ public class HueBridgeManager {
     public void setLastAccessedHueBridge (HueBridgeInfo bridge) {
         mLogger.debug("setLastAccessedHueBridge bridge = " + bridge.toString());
         mLastAccessedHueBridge = bridge;
+        mSettingsManager.getStoredPreferencesHelper().storeLastAccessedHueBridge(bridge);
+    }
+
+    public String getLastHueBridgeUsername () {
+        if (mLastHueBridgeUsername == null && mSettingsManager.getStoredPreferencesHelper().storesLastAccessedBridgeUsername()) {
+            mLastHueBridgeUsername = mSettingsManager.getStoredPreferencesHelper().restoreLastAccessedBridgeUsername();
+        }
+        mLogger.debug("getLastHueBridgeUsername mLastHueBridgeUsername = " + mLastHueBridgeUsername);
+        return mLastHueBridgeUsername;
+    }
+
+    public void setLastHueBridgeUsername (String username) {
+        mLogger.debug("setLastHueBridgeUsername username = " + username);
+        mLastHueBridgeUsername = username;
+        mSettingsManager.getStoredPreferencesHelper().storeLastAccessedBridgeUsername(mLastHueBridgeUsername);
     }
 
     public int getHueBridgePosition (HueBridgeInfo bridge) {

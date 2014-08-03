@@ -13,8 +13,10 @@ import com.alterego.ibeaconapp.app.R;
 import com.alterego.ibeaconapp.app.beacon.BeaconConsumer;
 import com.alterego.ibeaconapp.app.helpers.BindingValueConverters;
 import com.alterego.ibeaconapp.app.helpers.DateTimeSerializer;
-import com.alterego.ibeaconapp.app.hue.api.NuPNPApiManager;
+import com.alterego.ibeaconapp.app.helpers.StoredPreferencesHelper;
 import com.alterego.ibeaconapp.app.hue.HueBridgeManager;
+import com.alterego.ibeaconapp.app.hue.api.HueBridgeApiManager;
+import com.alterego.ibeaconapp.app.hue.api.NuPNPApiManager;
 import com.alterego.ibeaconapp.app.interfaces.IActionBarTitleHandler;
 import com.alterego.ibeaconapp.app.interfaces.INavigationDrawerHandler;
 import com.google.gson.Gson;
@@ -48,6 +50,8 @@ public class SettingsManager {
     @Getter @Setter private INavigationDrawerHandler mNavigationDrawerHandler;
     @Getter @Setter private IActionBarTitleHandler mActionBarTitleHandler;
     @Getter private BeaconFragmentFactory mBeaconFragmentFactory;
+    @Getter private StoredPreferencesHelper mStoredPreferencesHelper;
+    @Getter @Setter private HueBridgeApiManager mHueBridgeApiManager;
 
     //API Managers
     @Getter private NuPNPApiManager mNuPNPApiManager;
@@ -64,6 +68,7 @@ public class SettingsManager {
         //mViewBinder.getFontManager().registerFont("");
         mBeaconConsumer = new BeaconConsumer(this);
         mHueBridgeManager = new HueBridgeManager(this);
+        mStoredPreferencesHelper = new StoredPreferencesHelper(mParentApplication);
 
         setupManagers ();
     }
