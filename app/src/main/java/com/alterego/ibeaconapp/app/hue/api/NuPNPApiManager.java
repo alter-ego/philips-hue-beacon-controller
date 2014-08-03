@@ -26,7 +26,7 @@ public class NuPNPApiManager implements IDisposable {
                 .setConverter(new GsonConverter(mSettingsManager.getGson()))
                 .setEndpoint(mSettingsManager.getParentApplication().getResources().getString(R.string.nupnp_server_url))
                 .setErrorHandler(new NuPNPApiErrorHandler(mSettingsManager.getLogger()))
-                .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("LifesumApiManager"))
+                .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("NuPNPApiManager"))
                 .build();
 
         mNuPNPApiService = restAdapter.create(INuPNPApi.class);
@@ -34,7 +34,7 @@ public class NuPNPApiManager implements IDisposable {
 
     public Observable<List<HueBridgeInfo>> findLocalBridges () {
 
-        mSettingsManager.getLogger().debug("LifesumApiManager findLocalBridges");
+        mSettingsManager.getLogger().debug("NuPNPApiManager findLocalBridges");
         return mNuPNPApiService.getNuPNPBridgeInfo();
 
     }
