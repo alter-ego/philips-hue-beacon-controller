@@ -32,6 +32,11 @@ public class NuPNPApiManager implements IDisposable {
         mNuPNPApiService = restAdapter.create(INuPNPApi.class);
     }
 
+    /**
+     * This is the call to Philips server to find local bridges.
+     *
+     * @return {@link HueBridgeInfo} It returns a HueBridgeInfo object list with data on bridges on the local network
+     */
     public Observable<List<HueBridgeInfo>> findLocalBridges () {
 
         mSettingsManager.getLogger().debug("NuPNPApiManager findLocalBridges");
