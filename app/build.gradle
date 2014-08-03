@@ -42,6 +42,7 @@ dependencies {
     compile 'org.projectlombok:lombok:+'
     compile 'com.google.android.gms:play-services:+'
     compile 'joda-time:joda-time:+'
+    compile 'info.metadude.android:typed-preferences:+'
     compile 'com.google.code.gson:gson:2.2.+'
     compile 'com.netflix.rxjava:rxjava-core:0.17.6'
     compile 'com.netflix.rxjava:rxjava-android:0.17.6'
