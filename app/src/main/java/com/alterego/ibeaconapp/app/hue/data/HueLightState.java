@@ -31,7 +31,7 @@ public class HueLightState {
 
     //Indicates the color mode in which the light is working, this is the last command type it received.
     // Values are “hs” for Hue and Saturation, “xy” for XY and “ct” for Color Temperature. This parameter is only present when the light supports at least one of the values.
-    @Getter @Setter private String colormode;
+    @Getter @Setter private String colormode = "";
 
     //The Mired Color temperature of the light. 2012 connected lights are capable of 153 (6500K) to 500 (2000K).
     @Getter @Setter @SerializedName("ct") private int colorTemperature;

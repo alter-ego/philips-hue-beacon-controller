@@ -28,4 +28,10 @@ public class HueLight {
     //A fixed name describing the type of light e.g. “Extended color light”.
     @Getter @Setter private String type;
 
+    //this checks if we have a light that supports color (Philips Hue) or just a white bulb (Philips Lux)
+    //we just check if the HueLightState.getColormode() is not an empty string
+    public Boolean hasColor() {
+        return state!=null && state.getColormode()!=null && !state.getColormode().equals("");
+    }
+
 }
