@@ -1,10 +1,13 @@
 package com.alterego.ibeaconapp.app.viewmodels;
 
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import com.alterego.androidbound.ViewModel;
-import com.alterego.ibeaconapp.app.managers.SettingsManager;
+import com.alterego.ibeaconapp.app.fragments.ConnectUsernameFragment;
+import com.alterego.ibeaconapp.app.hue.api.HueBridgeApiManager;
 import com.alterego.ibeaconapp.app.hue.data.HueBridgeInfo;
+import com.alterego.ibeaconapp.app.managers.SettingsManager;
 
 import java.util.List;
 
@@ -32,6 +35,8 @@ public class ViewModelHome extends ViewModel {
 
     public void doOpenBridge (HueBridgeInfo bridgeNuPNPInfo) {
         //TODO doOpenBridge
+        mSettingsManager.setHueBridgeApiManager(new HueBridgeApiManager(mSettingsManager, bridgeNuPNPInfo.getInternalIPAddress()));
+        ConnectUsernameFragment.newInstance(mSettingsManager).show(((ActionBarActivity) mSettingsManager.getParentActivity()).getSupportFragmentManager(), null);
     }
 
     public List<HueBridgeInfo> getSavedBridges () {
