@@ -27,7 +27,7 @@ public class HueLightState {
    	@Getter @Setter private String alert;
 
     //Brightness of the light. This is a scale from the minimum brightness the light is capable of, 0, to the maximum capable brightness, 255. Note a brightness of 0 is not off.
-    @Getter @Setter @SerializedName("bri") private int brightness;
+    @Getter @Setter @SerializedName("bri") private byte brightness;
 
     //Indicates the color mode in which the light is working, this is the last command type it received.
     // Values are “hs” for Hue and Saturation, “xy” for XY and “ct” for Color Temperature. This parameter is only present when the light supports at least one of the values.
@@ -41,7 +41,7 @@ public class HueLightState {
     @Getter @Setter private String effect;
 
     //Hue of the light. This is a wrapping value between 0 and 65535. Both 0 and 65535 are red, 25500 is green and 46920 is blue.
-    @Getter @Setter private int hue;
+    @Getter @Setter private short hue;
 
     //On/Off state of the light. On=true, Off=false
     @Getter @Setter @SerializedName("on") private boolean isLightOn;
@@ -50,7 +50,7 @@ public class HueLightState {
     @Getter @Setter @SerializedName("reachable") private boolean isLightReachable;
 
     //Saturation of the light. 255 is the most saturated (colored) and 0 is the least saturated (white).
-    @Getter @Setter @SerializedName("sat") private int saturation;
+    @Getter @Setter @SerializedName("sat") private byte saturation;
 
     //The x and y coordinates of a color in CIE color space.
     //The first entry is the x coordinate and the second entry is the y coordinate. Both x and y are between 0 and 1.

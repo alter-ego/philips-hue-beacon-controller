@@ -20,7 +20,7 @@ public class HueBridgeConfiguration {
     @Getter @Setter @SerializedName("mac") public String macAddress;
 
     //Port of the proxy being used by the bridge. If set to 0 then a proxy is not being used.
-    @Getter @Setter @SerializedName("proxyport") public int proxyPort;
+    @Getter @Setter @SerializedName("proxyport") public short proxyPort;
 
     //Current time stored on the bridge.
     @Getter @Setter @SerializedName("UTC") public String currentBridgeUTCTime;
