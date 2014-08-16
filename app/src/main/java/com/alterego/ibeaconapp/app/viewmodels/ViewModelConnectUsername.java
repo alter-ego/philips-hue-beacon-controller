@@ -8,8 +8,8 @@ import com.alterego.androidbound.ViewModel;
 import com.alterego.ibeaconapp.app.MainApplication;
 import com.alterego.ibeaconapp.app.R;
 import com.alterego.ibeaconapp.app.fragments.ConnectUsernameFragment;
-import com.alterego.ibeaconapp.app.hue.data.HueBridgeInfo;
-import com.alterego.ibeaconapp.app.hue.data.responses.HueBridgeOperationResponse;
+import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeInfo;
+import com.alterego.ibeaconapp.app.api.hue.responses.HueBridgeOperationResponse;
 import com.alterego.ibeaconapp.app.managers.SettingsManager;
 
 import java.util.List;

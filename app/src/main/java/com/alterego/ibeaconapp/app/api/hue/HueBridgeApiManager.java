@@ -1,8 +1,8 @@
-package com.alterego.ibeaconapp.app.hue.api;
+package com.alterego.ibeaconapp.app.api.hue;
 
-import com.alterego.ibeaconapp.app.hue.data.HueBridgeConfiguration;
-import com.alterego.ibeaconapp.app.hue.data.requests.ConnectUserRequest;
-import com.alterego.ibeaconapp.app.hue.data.responses.HueBridgeOperationResponse;
+import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeConfiguration;
+import com.alterego.ibeaconapp.app.api.hue.requests.ConnectUserRequest;
+import com.alterego.ibeaconapp.app.api.hue.responses.HueBridgeOperationResponse;
 import com.alterego.ibeaconapp.app.interfaces.IDisposable;
 import com.alterego.ibeaconapp.app.managers.SettingsManager;
 
@@ -38,7 +38,7 @@ public class HueBridgeApiManager implements IDisposable {
      * the link button on the bridge
      *
      * @param username String of the username to be registered with the bridge
-     * @return {@link com.alterego.ibeaconapp.app.hue.data.responses.HueBridgeOperationResponse} Response which can contain an error or a success map with params inside
+     * @return {@link com.alterego.ibeaconapp.app.api.hue.responses.HueBridgeOperationResponse} Response which can contain an error or a success map with params inside
      */
     public Observable<List<HueBridgeOperationResponse>> getUserConnected (String username) {
 
@@ -50,7 +50,7 @@ public class HueBridgeApiManager implements IDisposable {
     /**
      * This call fetches bridge configuration for the last registered bridge username obtained from HueBridgeManager.
      *
-     * @return {@link com.alterego.ibeaconapp.app.hue.data.HueBridgeConfiguration} {@link rx.Observable} Returns a bridge configuration object
+     * @return {@link com.alterego.ibeaconapp.app.api.hue.data.HueBridgeConfiguration} {@link rx.Observable} Returns a bridge configuration object
      */
     public Observable<HueBridgeConfiguration> getConfigForUser() {
         String username = mSettingsManager.getHueBridgeManager().getLastHueBridgeUsername();

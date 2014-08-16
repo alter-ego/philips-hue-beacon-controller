@@ -1,9 +1,9 @@
-package com.alterego.ibeaconapp.app.hue.api;
+package com.alterego.ibeaconapp.app.api.hue;
 
-import com.alterego.ibeaconapp.app.hue.data.HueBridgeConfiguration;
-import com.alterego.ibeaconapp.app.hue.data.requests.ConnectUserRequest;
-import com.alterego.ibeaconapp.app.hue.data.requests.HueBridgeConfigurationRequest;
-import com.alterego.ibeaconapp.app.hue.data.responses.HueBridgeOperationResponse;
+import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeConfiguration;
+import com.alterego.ibeaconapp.app.api.hue.requests.ConnectUserRequest;
+import com.alterego.ibeaconapp.app.api.hue.requests.HueBridgeConfigurationRequest;
+import com.alterego.ibeaconapp.app.api.hue.responses.HueBridgeOperationResponse;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public interface IHueBridgeApi {
      * the link button on the bridge
      *
      * @param request {@link ConnectUserRequest} ConnectUserRequest with the username to be registered with the bridge
-     * @return {@link com.alterego.ibeaconapp.app.hue.data.responses.HueBridgeOperationResponse} Response which can contain an error or a success map with params inside
+     * @return {@link com.alterego.ibeaconapp.app.api.hue.responses.HueBridgeOperationResponse} Response which can contain an error or a success map with params inside
      */
     @POST("/api")
     Observable<List<HueBridgeOperationResponse>> getUserConnected(@Body ConnectUserRequest request);
@@ -40,7 +40,7 @@ public interface IHueBridgeApi {
      *
      * @param username  Username registered with the bridge
      * @param request {@link HueBridgeConfigurationRequest} HueBridgeConfigurationRequest with the config parameters to be changed
-     * @return {@link com.alterego.ibeaconapp.app.hue.data.responses.HueBridgeOperationResponse} Response which can contain an error or a success map with params inside
+     * @return {@link com.alterego.ibeaconapp.app.api.hue.responses.HueBridgeOperationResponse} Response which can contain an error or a success map with params inside
      */
     @PUT("/api/{username}/config")
     Observable<List<HueBridgeOperationResponse>> putBridgeConfig(@Path("username") String username, @Body HueBridgeConfigurationRequest request);

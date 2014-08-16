@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.alterego.ibeaconapp.app.hue.data.HueBridgeInfo;
+import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeInfo;
 
 import info.metadude.android.typedpreferences.BooleanPreference;
 import info.metadude.android.typedpreferences.StringPreference;

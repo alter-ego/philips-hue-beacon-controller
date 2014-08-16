@@ -1,4 +1,4 @@
-package com.alterego.ibeaconapp.app.beacon.data;
+package com.alterego.ibeaconapp.app.api.beacon.data;
 
 import com.radiusnetworks.ibeacon.IBeacon;
 

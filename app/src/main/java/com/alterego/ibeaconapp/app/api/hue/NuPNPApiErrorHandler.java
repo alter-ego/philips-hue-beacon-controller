@@ -1,4 +1,4 @@
-package com.alterego.ibeaconapp.app.hue.api;
+package com.alterego.ibeaconapp.app.api.hue;
 
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 import com.alterego.ibeaconapp.app.helpers.GeneralHelper;

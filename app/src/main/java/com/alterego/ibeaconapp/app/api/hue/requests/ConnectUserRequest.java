@@ -1,4 +1,4 @@
-package com.alterego.ibeaconapp.app.hue.data.requests;
+package com.alterego.ibeaconapp.app.api.hue.requests;
 
 import com.alterego.ibeaconapp.app.MainApplication;
 import com.alterego.ibeaconapp.app.R;

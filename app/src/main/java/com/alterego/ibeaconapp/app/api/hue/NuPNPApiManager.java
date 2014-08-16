@@ -1,7 +1,7 @@
-package com.alterego.ibeaconapp.app.hue.api;
+package com.alterego.ibeaconapp.app.api.hue;
 
 import com.alterego.ibeaconapp.app.R;
-import com.alterego.ibeaconapp.app.hue.data.HueBridgeInfo;
+import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeInfo;
 import com.alterego.ibeaconapp.app.interfaces.IDisposable;
 import com.alterego.ibeaconapp.app.managers.SettingsManager;
 

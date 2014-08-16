@@ -1,4 +1,4 @@
-package com.alterego.ibeaconapp.app.hue.data.responses;
+package com.alterego.ibeaconapp.app.api.hue.responses;
 
 import java.util.HashMap;
 import java.util.Map;
