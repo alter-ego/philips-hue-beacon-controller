@@ -1,6 +1,7 @@
 package com.alterego.ibeaconapp.app.api.hue;
 
 import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeConfiguration;
+import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeState;
 import com.alterego.ibeaconapp.app.api.hue.requests.ConnectUserRequest;
 import com.alterego.ibeaconapp.app.api.hue.requests.HueBridgeConfigurationRequest;
 import com.alterego.ibeaconapp.app.api.hue.responses.HueBridgeOperationResponse;
@@ -60,4 +61,14 @@ public interface IHueBridgeApi {
      */
     @PUT("/api/{username}/config")
     Observable<List<HueBridgeOperationResponse>> putBridgeConfig(@Path("username") String username, @Body HueBridgeConfigurationRequest request);
+
+    /**
+     * This command is used to fetch the entire datastore from the device, including settings and state information for lights, groups, schedules and configuration.
+     * It should only be used sparingly as it is resource intensive for the bridge, but is supplied e.g. for synchronization purposes.
+     *
+     * @param username  Username registered with the bridge
+     * @return {@link HueBridgeState} {@link rx.Observable} Returns a bridge state object
+     */
+    @GET("/api/{username}")
+    Observable<HueBridgeState> getBridgeState(@Path("username") String username);
 }
