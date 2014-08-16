@@ -2,7 +2,7 @@ package com.alterego.ibeaconapp.app.hue.api;
 
 import com.alterego.ibeaconapp.app.hue.data.HueBridgeConfiguration;
 import com.alterego.ibeaconapp.app.hue.data.requests.ConnectUserRequest;
-import com.alterego.ibeaconapp.app.hue.data.responses.ConnectUserResponse;
+import com.alterego.ibeaconapp.app.hue.data.responses.HueBridgeOperationResponse;
 import com.alterego.ibeaconapp.app.interfaces.IDisposable;
 import com.alterego.ibeaconapp.app.managers.SettingsManager;
 
@@ -38,9 +38,9 @@ public class HueBridgeApiManager implements IDisposable {
      * the link button on the bridge
      *
      * @param username String of the username to be registered with the bridge
-     * @return {@link ConnectUserResponse} Response which can contain an error or a success map with params inside
+     * @return {@link com.alterego.ibeaconapp.app.hue.data.responses.HueBridgeOperationResponse} Response which can contain an error or a success map with params inside
      */
-    public Observable<List<ConnectUserResponse>> getUserConnected (String username) {
+    public Observable<List<HueBridgeOperationResponse>> getUserConnected (String username) {
 
         mSettingsManager.getLogger().debug("HueBridgeApiManager getUserConnected username = " + username);
         return mHueBridgeApiService.getUserConnected(new ConnectUserRequest(username));

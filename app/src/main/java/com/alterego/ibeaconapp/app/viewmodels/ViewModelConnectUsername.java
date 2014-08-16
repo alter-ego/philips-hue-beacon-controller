@@ -9,7 +9,7 @@ import com.alterego.ibeaconapp.app.MainApplication;
 import com.alterego.ibeaconapp.app.R;
 import com.alterego.ibeaconapp.app.fragments.ConnectUsernameFragment;
 import com.alterego.ibeaconapp.app.hue.data.HueBridgeInfo;
-import com.alterego.ibeaconapp.app.hue.data.responses.ConnectUserResponse;
+import com.alterego.ibeaconapp.app.hue.data.responses.HueBridgeOperationResponse;
 import com.alterego.ibeaconapp.app.managers.SettingsManager;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class ViewModelConnectUsername extends ViewModel {
             getSettingsManager().getHueBridgeApiManager().getUserConnected(username)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<List<ConnectUserResponse>>() {
+                    .subscribe(new Observer<List<HueBridgeOperationResponse>>() {
                         @Override
                         public void onCompleted() {
                         }
@@ -65,7 +65,7 @@ public class ViewModelConnectUsername extends ViewModel {
                         }
 
                         @Override
-                        public void onNext(List<ConnectUserResponse> responseList) {
+                        public void onNext(List<HueBridgeOperationResponse> responseList) {
                             setConnectingProgressBarVisible(false);
                             getLogger().debug("doConnectToBridgeWithUsername onNext ");
 

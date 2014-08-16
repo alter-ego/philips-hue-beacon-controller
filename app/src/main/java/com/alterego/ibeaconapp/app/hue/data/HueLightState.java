@@ -44,10 +44,10 @@ public class HueLightState {
     @Getter @Setter private int hue;
 
     //On/Off state of the light. On=true, Off=false
-    @Getter @Setter private boolean on;
+    @Getter @Setter @SerializedName("on") private boolean isLightOn;
 
     //Indicates if a light can be reached by the bridge.
-    @Getter @Setter private boolean reachable;
+    @Getter @Setter @SerializedName("reachable") private boolean isLightReachable;
 
     //Saturation of the light. 255 is the most saturated (colored) and 0 is the least saturated (white).
     @Getter @Setter @SerializedName("sat") private int saturation;
@@ -59,7 +59,7 @@ public class HueLightState {
     /********************* ONLY WHEN SETTING ***********************/
 
     //The duration of the transition from the light’s current state to the new state.
-    // This is given as a multiple of 100ms and defaults to 4 (400ms). For example, setting transistiontime:10 will make the transition last 1 second.
+    // This is given as a multiple of 100ms and defaults to 4 (400ms). For example, setting transistiontime: 10 will make the transition last 1 second.
     @Getter @Setter private int transitiontime;
 
 }
