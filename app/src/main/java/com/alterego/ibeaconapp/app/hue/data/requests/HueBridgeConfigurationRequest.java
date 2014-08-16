@@ -1,32 +1,24 @@
-package com.alterego.ibeaconapp.app.hue.data;
+package com.alterego.ibeaconapp.app.hue.data.requests;
 
+import com.alterego.ibeaconapp.app.hue.data.HueBridgeSoftwareUpdate;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @ToString
-public class HueBridgeConfiguration {
+public class HueBridgeConfigurationRequest {
 
     //Editable name given to the bridge. This is also its uPnP name, so will reflect the actual uPnP name after any conflicts have been resolved.
     @Getter @Setter public String name;
 
     @Getter @Setter @SerializedName("ipaddress") public String IPAddress;
 
-    @Getter @Setter @SerializedName("mac") public String macAddress;
-
     //Port of the proxy being used by the bridge. If set to 0 then a proxy is not being used.
     @Getter @Setter @SerializedName("proxyport") public int proxyPort;
-
-    //Current time stored on the bridge.
-    @Getter @Setter @SerializedName("UTC") public String currentBridgeUTCTime;
-
-    //Software version of the bridge.
-    @Getter @Setter @SerializedName("swversion") public String currentSoftwareVersion;
 
     //IP Address of the proxy server being used. A value of “none” indicates no proxy.
     @Getter @Setter @SerializedName("proxyaddress") public String proxyAddress;
@@ -48,9 +40,5 @@ public class HueBridgeConfiguration {
 
     //Contains information related to software updates.
     @Getter @Setter @SerializedName("swupdate") public ArrayList<HueBridgeSoftwareUpdate> bridgeSoftwareUpdates;
-
-    //An array of whitelisted user IDs.
-    @Getter @Setter @SerializedName("whitelist") public HashMap<String, HueBridgeWhitelistEntry> userWhitelistEntries;
-
 
 }
