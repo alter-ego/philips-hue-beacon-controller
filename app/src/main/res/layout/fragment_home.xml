@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="com.alterego.ibeaconapp.app.fragments.FragmentHome"
+    tools:context="com.alterego.ibeaconapp.app.screens.homewithoutbridge.FragmentHome"
     tools:ignore="MissingPrefix">
 
     <ListView

@@ -52,10 +52,10 @@ public class HueBridgeApiManager implements IDisposable {
      *
      * @return {@link com.alterego.ibeaconapp.app.api.hue.data.HueBridgeConfiguration} {@link rx.Observable} Returns a bridge configuration object
      */
-    public Observable<HueBridgeConfiguration> getConfigForUser() {
+    public Observable<HueBridgeConfiguration> getConfigForLastHueBridgeUsername() {
         String username = mSettingsManager.getHueBridgeManager().getLastHueBridgeUsername();
         mSettingsManager.getLogger().debug("HueBridgeApiManager getConfigForUser username = " + username);
-        return mHueBridgeApiService.getConfigForUser(username);
+        return mHueBridgeApiService.getBridgeConfig(username);
     }
 
     @Override

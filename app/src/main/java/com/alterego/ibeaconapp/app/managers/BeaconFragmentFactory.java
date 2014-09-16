@@ -4,8 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 
-import com.alterego.ibeaconapp.app.fragments.FragmentHome;
-import com.alterego.ibeaconapp.app.managers.SettingsManager;
+import com.alterego.ibeaconapp.app.screens.homewithoutbridge.FragmentHome;
 
 import java.util.ArrayList;
 import java.util.Arrays;

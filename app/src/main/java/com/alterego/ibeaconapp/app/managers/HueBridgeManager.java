@@ -1,10 +1,13 @@
 package com.alterego.ibeaconapp.app.managers;
 
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
+import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeConfiguration;
 import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Observer;
 
 public class HueBridgeManager {
 
@@ -75,6 +78,25 @@ public class HueBridgeManager {
         } else
             return 0;
 
+    }
+
+    public void loadConfigForLastHueBridgeUsername () {
+        mSettingsManager.getHueBridgeApiManager().getConfigForLastHueBridgeUsername().subscribe(new Observer<HueBridgeConfiguration>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(HueBridgeConfiguration hueBridgeConfiguration) {
+
+            }
+        });
     }
 
 }
