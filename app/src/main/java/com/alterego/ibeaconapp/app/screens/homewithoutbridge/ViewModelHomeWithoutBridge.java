@@ -4,7 +4,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import com.alterego.androidbound.ViewModel;
+import com.alterego.ibeaconapp.app.R;
 import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeConfiguration;
+import com.alterego.ibeaconapp.app.api.hue.responses.HueBridgeOperationResponse;
 import com.alterego.ibeaconapp.app.screens.connecttobridge.ConnectUsernameFragment;
 import com.alterego.ibeaconapp.app.api.hue.HueBridgeApiManager;
 import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeInfo;
@@ -15,6 +17,7 @@ import java.util.List;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -86,29 +89,17 @@ public class ViewModelHomeWithoutBridge extends ViewModel {
         }
     };
 
-    Observer<HueBridgeConfiguration> hueBridgeConfigurationEmptyObserver = new Observer<HueBridgeConfiguration>() {
+    Action1<HueBridgeConfiguration> hueBridgeConfigurationEmptyObserver = new Action1<HueBridgeConfiguration>() {
         @Override
-        public void onCompleted() {}
-
-        @Override
-        public void onError(Throwable e) { }
-
-        @Override
-        public void onNext(HueBridgeConfiguration hueBridgeConfiguration) {
+        public void call(HueBridgeConfiguration hueBridgeConfiguration) {
             setErrorTextVisible(false, "");
             setConnectingProgressBarVisible(false);
         }
     };
 
-    Observer<HueBridgeConfiguration> hueBridgeConfigurationOkObserver = new Observer<HueBridgeConfiguration>() {
+    Action1<HueBridgeConfiguration> hueBridgeConfigurationOkObserver = new Action1<HueBridgeConfiguration>() {
         @Override
-        public void onCompleted() { }
-
-        @Override
-        public void onError(Throwable e) {}
-
-        @Override
-        public void onNext(HueBridgeConfiguration hueBridgeConfiguration) {
+        public void call(HueBridgeConfiguration hueBridgeConfiguration) {
             setErrorTextVisible(false, "");
             setConnectingProgressBarVisible(false);
             mSettingsManager.getBeaconFragmentFactory().replaceFragmentInMainContainer(0); //TODO this should be in a navigation drawer!
@@ -170,6 +161,7 @@ public class ViewModelHomeWithoutBridge extends ViewModel {
                     @Override
                     public void onError(Throwable e) {
                         mLogger.warning("doLookForLocalHueBridges error = " + e.toString());
+                        //TODO error handling?
                     }
 
                     @Override

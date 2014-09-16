@@ -14,8 +14,12 @@ import com.alterego.ibeaconapp.app.managers.SettingsManager;
 import java.util.List;
 import java.util.UUID;
 
+import rx.Observable;
 import rx.Observer;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class ViewModelConnectUsername extends ViewModel {
@@ -28,6 +32,9 @@ public class ViewModelConnectUsername extends ViewModel {
     private boolean mConnectingProgressBarVisible = false;
     private boolean mErrorTextVisible = false;
     private String mErrorDescription;
+    private Subscription bridgeResponseOkSubscription;
+    private Subscription bridgeResponseErrorSubscription;
+    private Subscription bridgeResponseEmptyOrNullSubscription;
 
     public ViewModelConnectUsername(ConnectUsernameFragment fragment) {
         mConnectUsernameFragment = fragment;
@@ -47,44 +54,72 @@ public class ViewModelConnectUsername extends ViewModel {
             getLogger().info("doConnectToBridgeWithUsername username = " + username);
             setConnectingProgressBarVisible(true);
 
-            getSettingsManager().getHueBridgeApiManager().getUserConnected(username)
+            Observable<List<HueBridgeOperationResponse>> userConnectedObservable = getSettingsManager().getHueBridgeApiManager().getUserConnected(username)
                     .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<List<HueBridgeOperationResponse>>() {
-                        @Override
-                        public void onCompleted() {
-                        }
+                    .observeOn(AndroidSchedulers.mainThread());
 
-                        @Override
-                        public void onError(Throwable e) {
-                            getLogger().warning("doConnectToBridgeWithUsername error = " + e.toString());
-                            setConnectingProgressBarVisible(false);
-                        }
+            bridgeResponseOkSubscription = userConnectedObservable.filter(new Func1<List<HueBridgeOperationResponse>, Boolean>() {
+                @Override
+                public Boolean call(List<HueBridgeOperationResponse> responseList) {
+                    return (responseList != null && responseList.size() > 0 && responseList.get(0).getSuccess().size() > 0 && responseList.get(0).getSuccess().containsKey("username"));
+                }
+            }).subscribe(bridgeResponseOkObserver);
 
-                        @Override
-                        public void onNext(List<HueBridgeOperationResponse> responseList) {
-                            setConnectingProgressBarVisible(false);
-                            getLogger().debug("doConnectToBridgeWithUsername onNext ");
+            bridgeResponseErrorSubscription = userConnectedObservable.filter(new Func1<List<HueBridgeOperationResponse>, Boolean>() {
+                @Override
+                public Boolean call(List<HueBridgeOperationResponse> responseList) {
+                    return (responseList != null && responseList.size() > 0 && responseList.get(0).getError().size() > 0);
+                }
+            }).subscribe(bridgeResponseErrorObserver);
 
-                            if (responseList != null && responseList.size() > 0 && responseList.get(0).getSuccess().size() > 0 && responseList.get(0).getSuccess().containsKey("username")) {
-                                String registered_username = responseList.get(0).getSuccess().get("username");
-                                getLogger().debug("doConnectToBridgeWithUsername onNext registered_username = " + registered_username);
-                                getSettingsManager().getHueBridgeManager().setLastHueBridgeUsername(registered_username);
-                                mConnectUsernameFragment.dismiss();
-                            } else if (responseList != null && responseList.size() > 0 && responseList.get(0).getError().size() > 0) {
-                                getLogger().debug("doConnectToBridgeWithUsername onNext Error = " + responseList.get(0).getError().get("description"));
-                                setErrorTextVisible (true, responseList.get(0).getError().get("description"));
-                            } else {
-                                getLogger().debug("doConnectToBridgeWithUsername onNext empty");
-                                setErrorTextVisible(true, mSettingsManager.getParentApplication().getString(R.string.dialog_usernameconnect_error));
-                            }
-
-                        }
-                    });
+            bridgeResponseEmptyOrNullSubscription = userConnectedObservable.filter(new Func1<List<HueBridgeOperationResponse>, Boolean>() {
+                @Override
+                public Boolean call(List<HueBridgeOperationResponse> responseList) {
+                    return (responseList != null && responseList.size() > 0 && responseList.get(0).getSuccess().size() > 0 && responseList.get(0).getSuccess().containsKey("username"));
+                }
+            }).subscribe(bridgeResponseEmptyOrNullObserver);
         }
     }
 
-    public String getErrorDescription () {
+    Action1<List<HueBridgeOperationResponse>> bridgeResponseOkObserver = new Action1<List<HueBridgeOperationResponse>>() {
+        @Override
+        public void call(List<HueBridgeOperationResponse> responseList) {
+            setConnectingProgressBarVisible(false);
+            String registered_username = responseList.get(0).getSuccess().get("username");
+            getLogger().debug("doConnectToBridgeWithUsername onNext registered_username = " + registered_username);
+            getSettingsManager().getHueBridgeManager().setLastHueBridgeUsername(registered_username);
+            mConnectUsernameFragment.dismiss();
+        }
+    };
+
+    Action1<List<HueBridgeOperationResponse>> bridgeResponseEmptyOrNullObserver = new Action1<List<HueBridgeOperationResponse>>() {
+        @Override
+        public void call(List<HueBridgeOperationResponse> responseList) {
+            getLogger().debug("doConnectToBridgeWithUsername onNext empty");
+            setErrorTextVisible(true, mSettingsManager.getParentApplication().getString(R.string.dialog_usernameconnect_error));
+        }
+    };
+
+    Observer<List<HueBridgeOperationResponse>> bridgeResponseErrorObserver = new Observer<List<HueBridgeOperationResponse>>() {
+        @Override
+        public void onCompleted() {
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            getLogger().warning("doConnectToBridgeWithUsername error = " + e.toString());
+            setConnectingProgressBarVisible(false);
+        }
+
+        @Override
+        public void onNext(List<HueBridgeOperationResponse> responseList) {
+            setConnectingProgressBarVisible(false);
+            getLogger().debug("doConnectToBridgeWithUsername onNext Error = " + responseList.get(0).getError().get("description"));
+            setErrorTextVisible(true, responseList.get(0).getError().get("description"));
+        }
+    };
+
+    public String getErrorDescription() {
         return mErrorDescription;
     }
 
@@ -111,6 +146,16 @@ public class ViewModelConnectUsername extends ViewModel {
     @Override
     public void dispose() {
         super.dispose();
+
+        if (bridgeResponseOkSubscription != null) {
+            bridgeResponseOkSubscription.unsubscribe();
+        }
+        if (bridgeResponseErrorSubscription != null) {
+            bridgeResponseErrorSubscription.unsubscribe();
+        }
+        if (bridgeResponseEmptyOrNullSubscription != null) {
+            bridgeResponseEmptyOrNullSubscription.unsubscribe();
+        }
     }
 
     public void setView(View view) {
