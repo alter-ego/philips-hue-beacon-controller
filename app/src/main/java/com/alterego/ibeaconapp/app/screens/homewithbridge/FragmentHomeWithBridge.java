@@ -1,4 +1,4 @@
-package com.alterego.ibeaconapp.app.screens.homewithoutbridge;
+package com.alterego.ibeaconapp.app.screens.homewithbridge;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,19 +9,20 @@ import android.view.ViewGroup;
 import com.alterego.ibeaconapp.app.MainApplication;
 import com.alterego.ibeaconapp.app.R;
 import com.alterego.ibeaconapp.app.managers.SettingsManager;
+import com.alterego.ibeaconapp.app.screens.homewithoutbridge.ViewModelHomeWithoutBridge;
 
 
-public class FragmentHome extends Fragment {
+public class FragmentHomeWithBridge extends Fragment {
 
     private SettingsManager mSettingsManager;
-    private ViewModelHome mViewModel;
+    private ViewModelHomeWithBridge mViewModel;
     private View mView;
 
-    public static FragmentHome newInstance() {
-        FragmentHome fragment = new FragmentHome();
+    public static FragmentHomeWithBridge newInstance() {
+        FragmentHomeWithBridge fragment = new FragmentHomeWithBridge();
         return fragment;
     }
-    public FragmentHome() {
+    public FragmentHomeWithBridge() {
         // Required empty public constructor
     }
 
@@ -29,16 +30,16 @@ public class FragmentHome extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSettingsManager = MainApplication.instance.getSettingsManager();
-        mSettingsManager.getLogger().info("FragmentHome onCreate");
+        mSettingsManager.getLogger().info("FragmentHomeWithBridge onCreate");
 
         if (mViewModel == null) {
-            mViewModel = new ViewModelHome(mSettingsManager);
+            mViewModel = new ViewModelHomeWithBridge(mSettingsManager);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = mSettingsManager.getViewBinder().inflate(getActivity(), mViewModel, R.layout.fragment_home, null);
+        mView = mSettingsManager.getViewBinder().inflate(getActivity(), mViewModel, R.layout.fragment_homewithbridge, null);
         mViewModel.setView(mView);
         return mView;
     }

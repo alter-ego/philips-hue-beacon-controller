@@ -4,7 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 
-import com.alterego.ibeaconapp.app.screens.homewithoutbridge.FragmentHome;
+import com.alterego.ibeaconapp.app.screens.homewithbridge.FragmentHomeWithBridge;
+import com.alterego.ibeaconapp.app.screens.homewithoutbridge.FragmentHomeWithoutBridge;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,11 +13,12 @@ import java.util.Arrays;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
-@Accessors(prefix="m")
+@Accessors(prefix = "m")
 public class BeaconFragmentFactory {
 
     private final SettingsManager mSettingsManager;
-    @Getter private ArrayList<String> mMenuItemTitles;
+    @Getter
+    private ArrayList<String> mMenuItemTitles;
 
     private int mMainContainerId;
 
@@ -32,10 +34,13 @@ public class BeaconFragmentFactory {
 
         switch (menu_position) {
             case 0:
-                return_fragment = FragmentHome.newInstance();
+                if (mSettingsManager.getHueBridgeManager().isHueBridgeConnected())
+                    return_fragment = FragmentHomeWithBridge.newInstance();
+                else
+                    return_fragment = FragmentHomeWithoutBridge.newInstance();
                 break;
             default:
-                return_fragment = FragmentHome.newInstance();
+                return_fragment = FragmentHomeWithoutBridge.newInstance();
         }
 
         mSettingsManager.getLogger().debug("ReaderFragmentFactory getFragmentForPosition menu_position = " + menu_position + ", fragment = " + return_fragment.toString());
@@ -44,7 +49,7 @@ public class BeaconFragmentFactory {
     }
 
 
-    public void replaceFragmentInMainContainer (Fragment fragment) {
+    private void replaceFragmentInMainContainer(Fragment fragment) {
         if (mSettingsManager.getParentActivity() != null) {
             FragmentManager fragmentManager = ((ActionBarActivity) mSettingsManager.getParentActivity()).getSupportFragmentManager();
             fragmentManager.beginTransaction()
@@ -53,11 +58,19 @@ public class BeaconFragmentFactory {
         }
     }
 
-    public void replaceFragmentInMainContainer (String menu_title) {
+    public void replaceFragmentInMainContainer(String menu_title) {
         int menu_position = mMenuItemTitles.indexOf(menu_title);
         Fragment fragment = getFragmentForPosition(menu_position);
         replaceFragmentInMainContainer(fragment);
+        //TODO should be in a fragment!
         mSettingsManager.getActionBarTitleHandler().setActionBarTitle(menu_title);
+    }
+
+    public void replaceFragmentInMainContainer(int menu_position) {
+        Fragment fragment = getFragmentForPosition(menu_position);
+        replaceFragmentInMainContainer(fragment);
+        //TODO should be in a fragment!
+        mSettingsManager.getActionBarTitleHandler().setActionBarTitle(mMenuItemTitles.get(menu_position));
     }
 
 }

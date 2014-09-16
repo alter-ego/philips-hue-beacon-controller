@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="com.alterego.ibeaconapp.app.screens.homewithoutbridge.FragmentHome"
+    tools:context="com.alterego.ibeaconapp.app.screens.homewithoutbridge.FragmentHomeWithoutBridge"
     tools:ignore="MissingPrefix">
 
     <ListView
@@ -14,8 +14,27 @@
         android:layout_height="300dp"
         android:id="@+id/bridgesListView"
         android:layout_margin="5dp"
+        android:visibility="gone"
         >
     </ListView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="16sp"
+        android:layout_marginBottom="@dimen/dialog_usernameconnect_edittext_margin"
+        android:textColor="#ff0000"
+        binding="{Text &lt;= ErrorDescription}; {Typeface &lt;- ToFont(this, &apos;default&apos;)}; {Visibility &lt;= ToVisibility(ErrorTextVisible)}"
+        android:gravity="center"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        binding="{Visibility &lt;= ToVisibility(ConnectingProgressBarVisible)}"
+        android:visibility="gone"/>
 
     <Button
         android:layout_width="150dp"
