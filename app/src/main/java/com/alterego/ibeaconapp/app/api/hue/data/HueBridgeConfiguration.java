@@ -16,7 +16,7 @@ public class HueBridgeConfiguration {
     @Getter @Setter public String name;
 
     //Contains information related to software updates.
-    @Getter @Setter @SerializedName("swupdate") public ArrayList<HueBridgeSoftwareUpdate> bridgeSoftwareUpdates;
+    @Getter @Setter @SerializedName("swupdate") public HueBridgeSoftwareUpdate bridgeSoftwareUpdate;
 
     //An array of whitelisted user IDs.
     @Getter @Setter @SerializedName("whitelist") public HashMap<String, HueBridgeWhitelistEntry> userWhitelistEntries;
@@ -51,6 +51,12 @@ public class HueBridgeConfiguration {
 
     //This indicates whether the bridge is registered to synchronize data with a portal account.
     @Getter @Setter @SerializedName("portalservices") public boolean isBridgeRegisteredWithPortal;
+
+    //This indicates whether the bridge is currently connected to the portal
+    @Getter @Setter @SerializedName("portalconnection") public String bridgePortalConnectionState;
+
+    //This gives us the portal state
+    @Getter @Setter @SerializedName("portalstate") public HuePortalState bridgePortalState;
 
     //Current time stored on the bridge.
     @Getter @Setter @SerializedName("UTC") public String currentBridgeUTCTime;
