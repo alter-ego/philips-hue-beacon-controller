@@ -25,8 +25,7 @@ public class NavigationDrawerViewModel extends ViewModel {
     private final SettingsManager mSettingsManager;
     private final Subscription mConfigOKSubscription;
     private final Subscription mConfigNullOrEmptyOrErrorSubscription;
-    @Getter
-    private int mCurrentSelectedPosition;
+    @Getter private int mCurrentSelectedPosition; //TODO do we need mCurrentSelectedPosition here and in fragment?
     private BeaconFragmentFactory mBeaconFragmentFactory;
     private List<String> mMenuItems;
 
