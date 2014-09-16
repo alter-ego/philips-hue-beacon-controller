@@ -5,10 +5,13 @@ import com.alterego.ibeaconapp.app.R;
 
 public class ConnectUserRequest {
 
-    //devicetype should be the app name
-    String devicetype = MainApplication.instance.getResources().getString(R.string.app_name);
+    //string 0..40 <application_name>#<devicename>
+    //application_name string 0..20, devicename string 0..19
+    //(Example: hue#iphone peter )
+    String devicetype = MainApplication.instance.getResources().getString(R.string.app_name) + android.os.Build.MODEL;
 
-    //username should be UUID but we don't want to use that
+    //string 10..40 A username. If this is not provided, a random key will be generated and returned in the response.
+    //It is recommended that a unique identifier for the device be used as the username
     String username = "";
 
     public ConnectUserRequest (String uname) {
