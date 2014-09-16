@@ -26,7 +26,7 @@ public class ViewModelConnectUsername extends ViewModel {
     private View mView;
 
     private boolean mConnectingProgressBarVisible = false;
-    private boolean mErrorTextVisible;
+    private boolean mErrorTextVisible = false;
     private String mErrorDescription;
 
     public ViewModelConnectUsername(ConnectUsernameFragment fragment) {
@@ -71,7 +71,6 @@ public class ViewModelConnectUsername extends ViewModel {
                                 getLogger().debug("doConnectToBridgeWithUsername onNext registered_username = " + registered_username);
                                 getSettingsManager().getHueBridgeManager().setLastHueBridgeUsername(registered_username);
                                 mConnectUsernameFragment.dismiss();
-                                //TODO it should open the lights details fragment, as in VMHome
                             } else if (responseList != null && responseList.size() > 0 && responseList.get(0).getError().size() > 0) {
                                 getLogger().debug("doConnectToBridgeWithUsername onNext Error = " + responseList.get(0).getError().get("description"));
                                 setErrorTextVisible (true, responseList.get(0).getError().get("description"));
