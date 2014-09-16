@@ -70,4 +70,10 @@ public class HueBridgeConfiguration {
     //The current wireless frequency channel used by the bridge. It can take values of 11, 15, 20,25 or 0 if undefined (factory new).
     @Getter @Setter @SerializedName("zigbeechannel") public String zigbeeChannel;
 
+    public static final HueBridgeConfiguration Empty = new HueBridgeConfiguration();
+
+    public boolean isEmpty () {
+        return Empty.equals(this);
+    }
+
 }
