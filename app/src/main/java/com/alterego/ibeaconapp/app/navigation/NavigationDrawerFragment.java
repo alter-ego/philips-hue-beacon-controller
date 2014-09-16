@@ -169,7 +169,7 @@ public class NavigationDrawerFragment extends Fragment implements INavigationDra
                     mUserLearnedDrawer = true;
                     SharedPreferences sp = PreferenceManager
                             .getDefaultSharedPreferences(getActivity());
-                    sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).commit();
+                    sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
                 }
 
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
@@ -197,7 +197,6 @@ public class NavigationDrawerFragment extends Fragment implements INavigationDra
     public void selectItem(int position) {
         try {
             mCurrentSelectedPosition = position;
-            //TODO setup title?
 
             //TODO checking item in the listview
 //            if (mDrawerListView != null) {
