@@ -207,10 +207,16 @@ public class NavigationDrawerFragment extends Fragment implements INavigationDra
 //            mDrawerLayout.closeDrawer(mFragmentContainerView);
 //        }
             closeDrawer();
-            mNavigationDrawerViewModel.openMenuItem (mSettingsManager.getBeaconFragmentFactory().getMenuItemTitles().get(position));
-//        if (mCallbacks != null) {
-//            mCallbacks.onNavigationDrawerItemSelected(position);
-//        }
+
+            try {
+                //TODO doSelectMenuItem add checked item!
+                mSettingsManager.getLogger().info("openMenuItem position = " + position);
+                if (mSettingsManager.getParentActivity() != null) {
+                    mSettingsManager.getBeaconFragmentFactory().replaceFragmentInMainContainer(mCurrentSelectedPosition);
+                }
+            } catch (Exception e) {
+                mSettingsManager.getLogger().warning("NavigationDrawerViewModel openMenuItem exception = " + e.toString());
+            }
         } catch (Exception e) {
             mSettingsManager.getLogger().warning("openDrawer exception = " + e.toString());
         }
