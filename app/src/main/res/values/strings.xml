@@ -11,8 +11,7 @@
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fragment_home_button_lookforlocalbridges">Look for bridge</string>
-    <string name="dialog_usernameconnect_text">Enter your desired username, press the button on the bridge and click Connect!</string>
-    <string name="dialog_usernameconnect_edittext_hint">Username</string>
+    <string name="dialog_usernameconnect_text">Press the button on the bridge and click Connect!</string>
     <string name="dialog_usernameconnect_button_connect">Connect</string>
     <string name="dialog_usernameconnect_error">There was an error connecting. Please repeat!</string>
 

@@ -12,6 +12,7 @@ import com.alterego.ibeaconapp.app.api.hue.responses.HueBridgeOperationResponse;
 import com.alterego.ibeaconapp.app.managers.SettingsManager;
 
 import java.util.List;
+import java.util.UUID;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -37,16 +38,12 @@ public class ViewModelConnectUsername extends ViewModel {
     }
 
     public void doConnectToBridgeWithUsername() {
-        String username = "";
-        setErrorTextVisible (false, "");
-        //TODO we should automatically assing the suername instead of asking the user for it; we still need this because the user needs to press the button on hue and
-        //then in the app to connect, save the username and then load the configuration
-        if (mView != null) {
-            EditText edittext_username = (EditText) mView.findViewById(R.id.edittext_username);
-            username = edittext_username.getText().toString();
-        }
+        String username = UUID.randomUUID().toString();
 
-        if (username != null && getSettingsManager().getHueBridgeApiManager() != null) {
+        setErrorTextVisible(false, "");
+        //then in the app to connect, save the username and then load the configuration
+
+        if (getSettingsManager().getHueBridgeApiManager() != null) {
             getLogger().info("doConnectToBridgeWithUsername username = " + username);
             setConnectingProgressBarVisible(true);
 
