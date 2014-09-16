@@ -21,7 +21,7 @@ import rx.schedulers.Schedulers;
 public class ViewModelHomeWithoutBridge extends ViewModel {
 
     private final SettingsManager mSettingsManager;
-    private Subscription mConfigNullSubscription;
+    private Subscription mConfigErrorAndNullSubscription;
     private Subscription mConfigOKSubscription;
     private Subscription mConfigEmptySubscription;
     private List<HueBridgeInfo> mHueBridges;
@@ -36,7 +36,8 @@ public class ViewModelHomeWithoutBridge extends ViewModel {
         mHueBridges = mSettingsManager.getHueBridgeManager().getLastHueBridges();
 
         mConfigOKSubscription = mSettingsManager.getHueBridgeManager().getConfigSubject()
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .filter(new Func1<HueBridgeConfiguration, Boolean>() {
                     @Override
                     public Boolean call(HueBridgeConfiguration hueBridgeConfiguration) {
@@ -44,17 +45,19 @@ public class ViewModelHomeWithoutBridge extends ViewModel {
                     }
                 }).subscribe(hueBridgeConfigurationOkObserver);
 
-        mConfigNullSubscription = mSettingsManager.getHueBridgeManager().getConfigSubject()
-                .subscribeOn(AndroidSchedulers.mainThread())
+        mConfigErrorAndNullSubscription = mSettingsManager.getHueBridgeManager().getConfigSubject()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .filter(new Func1<HueBridgeConfiguration, Boolean>() {
                     @Override
                     public Boolean call(HueBridgeConfiguration hueBridgeConfiguration) {
                         return hueBridgeConfiguration == null;
                     }
-                }).subscribe(hueBridgeConfigurationNullObserver);
+                }).subscribe(hueBridgeConfigurationErrorAndNullObserver);
 
         mConfigEmptySubscription = mSettingsManager.getHueBridgeManager().getConfigSubject()
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .filter(new Func1<HueBridgeConfiguration, Boolean>() {
                     @Override
                     public Boolean call(HueBridgeConfiguration hueBridgeConfiguration) {
@@ -63,7 +66,7 @@ public class ViewModelHomeWithoutBridge extends ViewModel {
                 }).subscribe(hueBridgeConfigurationEmptyObserver);
     }
 
-    Observer<HueBridgeConfiguration> hueBridgeConfigurationNullObserver = new Observer<HueBridgeConfiguration>() {
+    Observer<HueBridgeConfiguration> hueBridgeConfigurationErrorAndNullObserver = new Observer<HueBridgeConfiguration>() {
         @Override
         public void onCompleted() {
         }
@@ -71,7 +74,7 @@ public class ViewModelHomeWithoutBridge extends ViewModel {
         @Override
         public void onError(Throwable e) {
             mLogger.error("ViewModelHomeWithoutBridge hueBridgeConfigurationNullObserver onError = " + e.toString());
-            setErrorTextVisible(true, e.toString());
+            setErrorTextVisible(true, e.toString()); //TODO add error message
             setConnectingProgressBarVisible(false);
         }
 
@@ -85,15 +88,10 @@ public class ViewModelHomeWithoutBridge extends ViewModel {
 
     Observer<HueBridgeConfiguration> hueBridgeConfigurationEmptyObserver = new Observer<HueBridgeConfiguration>() {
         @Override
-        public void onCompleted() {
-        }
+        public void onCompleted() {}
 
         @Override
-        public void onError(Throwable e) {
-            mLogger.error("ViewModelHomeWithoutBridge hueBridgeConfigurationEmptyObserver onError = " + e.toString());
-            setErrorTextVisible(true, e.toString());
-            setConnectingProgressBarVisible(false);
-        }
+        public void onError(Throwable e) { }
 
         @Override
         public void onNext(HueBridgeConfiguration hueBridgeConfiguration) {
@@ -104,15 +102,10 @@ public class ViewModelHomeWithoutBridge extends ViewModel {
 
     Observer<HueBridgeConfiguration> hueBridgeConfigurationOkObserver = new Observer<HueBridgeConfiguration>() {
         @Override
-        public void onCompleted() {
-        }
+        public void onCompleted() { }
 
         @Override
-        public void onError(Throwable e) {
-            mLogger.error("ViewModelHomeWithoutBridge hueBridgeConfigurationOkObserver onError = " + e.toString());
-            setErrorTextVisible(true, e.toString());
-            setConnectingProgressBarVisible(false);
-        }
+        public void onError(Throwable e) {}
 
         @Override
         public void onNext(HueBridgeConfiguration hueBridgeConfiguration) {
@@ -220,8 +213,8 @@ public class ViewModelHomeWithoutBridge extends ViewModel {
         if (mConfigEmptySubscription != null) {
             mConfigEmptySubscription.unsubscribe();
         }
-        if (mConfigNullSubscription != null) {
-            mConfigNullSubscription.unsubscribe();
+        if (mConfigErrorAndNullSubscription != null) {
+            mConfigErrorAndNullSubscription.unsubscribe();
         }
         if (mConfigOKSubscription != null) {
             mConfigOKSubscription.unsubscribe();
