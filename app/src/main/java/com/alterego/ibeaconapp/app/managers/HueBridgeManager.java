@@ -7,16 +7,22 @@ import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeInfo;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.experimental.Accessors;
 import rx.Observer;
+import rx.subjects.BehaviorSubject;
 
+@Accessors(prefix="m")
 public class HueBridgeManager {
 
     private final SettingsManager mSettingsManager;
     private final IAndroidLogger mLogger;
-
     private List<HueBridgeInfo> mLastHueBridges = new ArrayList<HueBridgeInfo>();
     private HueBridgeInfo mLastAccessedHueBridge;
     private String mLastHueBridgeUsername;
+    private HueBridgeConfiguration mLastHueBridgeConfiguration = HueBridgeConfiguration.Empty;
+    @Getter private BehaviorSubject<HueBridgeConfiguration> mConfigSubject = BehaviorSubject.create(mLastHueBridgeConfiguration);
+    @Getter boolean mHueBridgeConnected = false;
 
     public HueBridgeManager (SettingsManager mgr) {
         mSettingsManager = mgr;
@@ -83,18 +89,19 @@ public class HueBridgeManager {
     public void loadConfigForLastHueBridgeUsername () {
         mSettingsManager.getHueBridgeApiManager().getConfigForLastHueBridgeUsername().subscribe(new Observer<HueBridgeConfiguration>() {
             @Override
-            public void onCompleted() {
-
-            }
+            public void onCompleted() { }
 
             @Override
             public void onError(Throwable e) {
-
+                mLogger.error("loadConfigForLastHueBridgeUsername error loading configuration = " + e.toString());
+                getConfigSubject().onNext(null);
             }
 
             @Override
             public void onNext(HueBridgeConfiguration hueBridgeConfiguration) {
-
+                mLastHueBridgeConfiguration = hueBridgeConfiguration;
+                mHueBridgeConnected = true;
+                getConfigSubject().onNext(mLastHueBridgeConfiguration);
             }
         });
     }
