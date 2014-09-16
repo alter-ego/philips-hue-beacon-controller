@@ -31,6 +31,7 @@ public class FragmentHomeWithBridge extends Fragment {
         super.onCreate(savedInstanceState);
         mSettingsManager = MainApplication.instance.getSettingsManager();
         mSettingsManager.getLogger().info("FragmentHomeWithBridge onCreate");
+        mSettingsManager.getActionBarTitleHandler().setActionBarTitle(MainApplication.instance.getString(R.string.fragment_home_title));
 
         if (mViewModel == null) {
             mViewModel = new ViewModelHomeWithBridge(mSettingsManager);
