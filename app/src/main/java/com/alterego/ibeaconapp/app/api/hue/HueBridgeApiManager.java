@@ -22,6 +22,8 @@ public class HueBridgeApiManager implements IDisposable {
 
     public HueBridgeApiManager(SettingsManager mgr, String bridgeIP) {
         mSettingsManager = mgr;
+        mSettingsManager.setHueLightsApiManager(new HueLightsApiManager(mSettingsManager, bridgeIP));
+
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setConverter(new GsonConverter(mSettingsManager.getGson()))

@@ -11,6 +11,7 @@ import com.alterego.androidbound.ViewBinder;
 import com.alterego.androidbound.zzzztoremove.UiThreadScheduler;
 import com.alterego.ibeaconapp.app.R;
 import com.alterego.ibeaconapp.app.api.beacon.BeaconConsumer;
+import com.alterego.ibeaconapp.app.api.hue.HueLightsApiManager;
 import com.alterego.ibeaconapp.app.helpers.BindingValueConverters;
 import com.alterego.ibeaconapp.app.helpers.DateTimeSerializer;
 import com.alterego.ibeaconapp.app.helpers.StoredPreferencesHelper;
@@ -51,6 +52,7 @@ public class SettingsManager {
     @Getter private BeaconFragmentFactory mBeaconFragmentFactory;
     @Getter private StoredPreferencesHelper mStoredPreferencesHelper;
     @Getter @Setter private HueBridgeApiManager mHueBridgeApiManager;
+    @Getter @Setter private HueLightsApiManager mHueLightsApiManager;
 
     //API Managers
     @Getter private NuPNPApiManager mNuPNPApiManager;
