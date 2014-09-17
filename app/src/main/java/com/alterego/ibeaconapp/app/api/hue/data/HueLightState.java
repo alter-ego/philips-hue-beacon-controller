@@ -7,6 +7,7 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /*NOTES:
 A light cannot have its hue, saturation, brightness, effect, ct or xy modified when it is turned off. Doing so will return error 201.
@@ -15,6 +16,7 @@ There are 3 methods available to set the color of the light – hue and saturati
 If multiple methods are used then a priority is used: xy > ct > hs. All included parameters will be updated but the ‘colormode’ will be set using the priority system.
 */
 
+@ToString
 public class HueLightState {
 
     /*The alert effect, which is a temporary change to the bulb’s state. This can take one of the following values:

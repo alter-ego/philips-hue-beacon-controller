@@ -7,7 +7,9 @@ import java.util.HashMap;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 public class HueBridgeState {
 
     //All configuration settings.

@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 public class HueBridgeWhitelistEntry {
 
     @Getter @Setter @SerializedName("last use date") public String lastSeenDateTime;
