@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,7 @@ public class HueBridgeConfiguration {
     @Getter @Setter @SerializedName("swupdate") public HueBridgeSoftwareUpdate bridgeSoftwareUpdate;
 
     //An array of whitelisted user IDs.
-    @Getter @Setter @SerializedName("whitelist") public HashMap<String, HueBridgeWhitelistEntry> userWhitelistEntries;
+    @Getter @Setter @SerializedName("whitelist") public Map<String, HueBridgeWhitelistEntry> userWhitelistEntries;
 
     //The version of the hue API in the format <major>.<minor>.<patch>, for example 1.2.1
     @Getter @Setter @SerializedName("apiversion") public String currentApiVersion;
