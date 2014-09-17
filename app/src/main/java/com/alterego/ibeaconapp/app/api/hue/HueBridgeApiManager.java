@@ -26,7 +26,7 @@ public class HueBridgeApiManager implements IDisposable {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setConverter(new GsonConverter(mSettingsManager.getGson()))
                 .setEndpoint("http://" + bridgeIP)
-                .setErrorHandler(new HueBridgeApiErrorHandler(mSettingsManager.getLogger()))
+                .setErrorHandler(new HueApiErrorHandler(mSettingsManager.getLogger()))
                 .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("HueBridgeApiManager"))
                 .build();
 
