@@ -87,7 +87,7 @@ public class HueBridgeManager {
     }
 
     public void loadConfigForLastHueBridgeUsername () {
-        mSettingsManager.getHueBridgeApiManager().getConfigForLastHueBridgeUsername().subscribe(new Observer<HueBridgeConfiguration>() {
+        mSettingsManager.getHueBridgeApiManager().getConfig(mSettingsManager.getHueBridgeManager().getLastHueBridgeUsername()).subscribe(new Observer<HueBridgeConfiguration>() {
             @Override
             public void onCompleted() { }
 
