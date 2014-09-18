@@ -36,6 +36,16 @@
         android:visibility="gone"
         />
 
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="35dp"
+        binding="{Click &lt;- SearchForNewLights}; {Typeface &lt;- ToFont(this, &apos;default&apos;)}; {Visibility &lt;= ToVisibility(SearchLightsVisible)}"
+        android:text="search"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

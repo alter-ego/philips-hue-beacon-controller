@@ -4,44 +4,100 @@ import android.view.View;
 
 import com.alterego.androidbound.ViewModel;
 import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeConfiguration;
+import com.alterego.ibeaconapp.app.api.hue.data.HueLight;
+import com.alterego.ibeaconapp.app.api.hue.responses.HueBridgeOperationResponse;
 import com.alterego.ibeaconapp.app.managers.SettingsManager;
+
+import java.util.List;
+import java.util.Map;
+
+import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 public class ViewModelHomeWithBridge extends ViewModel {
 
     private final SettingsManager mSettingsManager;
     private View mView;
     private Subscription mConfigSubscription;
-    private boolean mErrorTextVisible;
+    private boolean mErrorTextVisible = false;
     private String mErrorDescription;
+    private boolean mConnectingProgressBarVisible = false;
+    private boolean mSearchLightsVisible = false;
 
     public ViewModelHomeWithBridge(SettingsManager mgr) {
         mSettingsManager = mgr;
         mLogger = mgr.getLogger();
-        mConfigSubscription = mSettingsManager.getHueBridgeManager().getConfigSubject().subscribeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<HueBridgeConfiguration>() {
-            @Override
-            public void onCompleted() { }
+        setConnectingProgressBarVisible(true);
 
-            @Override
-            public void onError(Throwable e) {
-                setErrorTextVisible(true, e.toString());
-            }
+        //TODO use mgr internal lights subject so that we can refresh the list of lights from the manager
+        mConfigSubscription = mSettingsManager.getHueBridgeManager().getConfigSubject()
+                .flatMap(new Func1<HueBridgeConfiguration, Observable<Map<String, HueLight>>>() {
+                    @Override
+                    public Observable<Map<String, HueLight>> call(HueBridgeConfiguration hueBridgeConfiguration) {
+                        return mSettingsManager.getHueLightsApiManager().getLights();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Map<String, HueLight>>() {
+                    @Override
+                    public void onCompleted() {
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        setErrorTextVisible(true, e.toString());
+                        setConnectingProgressBarVisible(false);
+                        setSearchLightsVisible(false);
+                    }
+
+                    @Override
+                    public void onNext(Map<String, HueLight> hueLights) {
+                        setConnectingProgressBarVisible(false);
+                        if (hueLights == null || hueLights.isEmpty())
+                            setErrorTextVisible(true, "no lights found"); //TODO empty lights message
+                        else {
+                            setErrorTextVisible(false, ""); //set lights list!
+                            mLogger.debug("lights = " + hueLights.toString());
+                        }
+                        setSearchLightsVisible(true);
+                    }
+                });
+
+    }
+
+    public boolean getSearchLightsVisible () {
+        return mSearchLightsVisible;
+    }
+
+    public void setSearchLightsVisible (boolean visible) {
+        mSearchLightsVisible = visible;
+        raisePropertyChanged("SearchLightsVisible");
+    }
+
+    public boolean canSearchForNewLights () {
+        return true;
+    }
+
+    public void doSearchForNewLights () {
+        //TODO use mgr internal lights subject so that we can refresh the list of lights from the manager
+        mSettingsManager.getHueLightsApiManager().searchForNewLights(null).subscribe(new Action1<List<HueBridgeOperationResponse>>() {
             @Override
-            public void onNext(HueBridgeConfiguration hueBridgeConfiguration) {
-                if (hueBridgeConfiguration == null)
-                    //setErrorTextVisible(true, mSettingsManager.getParentApplication().getString(R.string.dialog_usernameconnect_error));
-                    setErrorTextVisible(true, "error connecting!");
-                else {
-                    //TODO should show lights list and start connecting to bluetooth!
-                    setErrorTextVisible(false, "");
-                }
+            public void call(List<HueBridgeOperationResponse> hueBridgeOperationResponse) {
+                mLogger.debug("doSearchForNewLights hueBridgeOperationResponse = " + hueBridgeOperationResponse.toString());
             }
         });
+    }
 
-        //TODO add lights subscription
+    public boolean getConnectingProgressBarVisible() {
+        return mConnectingProgressBarVisible;
+    }
+
+    public void setConnectingProgressBarVisible(boolean visible) {
+        mConnectingProgressBarVisible = visible;
+        raisePropertyChanged("ConnectingProgressBarVisible");
     }
 
     public String getErrorDescription () {
