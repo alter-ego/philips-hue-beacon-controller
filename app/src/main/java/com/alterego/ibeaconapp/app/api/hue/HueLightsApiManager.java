@@ -1,10 +1,13 @@
 package com.alterego.ibeaconapp.app.api.hue;
 
 import com.alterego.ibeaconapp.app.api.hue.data.HueLight;
+import com.alterego.ibeaconapp.app.api.hue.responses.HueBridgeOperationResponse;
 import com.alterego.ibeaconapp.app.api.hue.responses.HueLightsNewLightsResponse;
 import com.alterego.ibeaconapp.app.interfaces.IDisposable;
 import com.alterego.ibeaconapp.app.managers.SettingsManager;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +68,21 @@ public class HueLightsApiManager implements IDisposable {
             }
         });
 
+    }
+
+    //TODO add internal lights subject so that we can refresh the list of lights from the manager
+    //TODO add filter for success, add 60+ seconds delay and get a list of lights again
+    public Observable<List<HueBridgeOperationResponse>> searchForNewLights (List<String> devicesToStartSearchOn) {
+        HashMap<String, List<String>> devices = new HashMap<String, List<String>>();
+        String username = mSettingsManager.getHueBridgeManager().getLastHueBridgeUsername();
+        if (devicesToStartSearchOn!=null && devicesToStartSearchOn.size() > 0 && mSettingsManager.getHueBridgeManager().getLastHueBridgeConfiguration().isCurrentApiAbove("1.1")) {
+            devices.put("deviceid", devicesToStartSearchOn);
+            mSettingsManager.getLogger().debug("HueLightsApiManager searchForNewLights username = " + username + ", devices = " + devicesToStartSearchOn.toString());
+            return mHueLightsApiService.searchForNewLights(username, devices);
+        } else {
+            mSettingsManager.getLogger().debug("HueLightsApiManager searchForNewLights username = " + username);
+            return mHueLightsApiService.searchForNewLights(username);
+        }
     }
 
     @Override
