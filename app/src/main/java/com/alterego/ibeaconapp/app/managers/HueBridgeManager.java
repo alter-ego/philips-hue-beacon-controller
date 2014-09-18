@@ -20,7 +20,7 @@ public class HueBridgeManager {
     private List<HueBridgeInfo> mLastHueBridges = new ArrayList<HueBridgeInfo>();
     private HueBridgeInfo mLastAccessedHueBridge;
     private String mLastHueBridgeUsername;
-    private HueBridgeConfiguration mLastHueBridgeConfiguration = HueBridgeConfiguration.Empty;
+    @Getter private HueBridgeConfiguration mLastHueBridgeConfiguration = HueBridgeConfiguration.Empty;
     @Getter private BehaviorSubject<HueBridgeConfiguration> mConfigSubject = BehaviorSubject.create(mLastHueBridgeConfiguration);
     @Getter boolean mHueBridgeConnected = false;
 
