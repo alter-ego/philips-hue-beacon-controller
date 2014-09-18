@@ -11,6 +11,8 @@ import lombok.ToString;
 @ToString
 public class HueLightsNewLightsResponse {
 
+    //lastscan is “active” if a scan is currently on-going, “none” if a scan has not been performed since the bridge was powered on,
+    // or else the date and time that the last scan was completed in ISO 8601:2004 format (YYYY-MM-DDThh:mm:ss).
     @Getter public String lastscan = "";
     @Getter public Map<String, HueLightName> newLights;
 
@@ -27,6 +29,14 @@ public class HueLightsNewLightsResponse {
             newLights.put(entry.getKey(), value);
         }
 
+    }
+
+    public boolean isLightsSearchOngoing () {
+        return "active".equalsIgnoreCase(lastscan);
+    }
+
+    public boolean areThereNewLights() {
+        return !isLightsSearchOngoing() && !"none".equalsIgnoreCase(lastscan);
     }
 
 }
