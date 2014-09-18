@@ -1,16 +1,11 @@
 package com.alterego.ibeaconapp.app.managers;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBarActivity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 
 import com.alterego.ibeaconapp.app.screens.homewithbridge.FragmentHomeWithBridge;
 import com.alterego.ibeaconapp.app.screens.homewithoutbridge.FragmentHomeWithoutBridge;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import lombok.Getter;
 import lombok.experimental.Accessors;
 
 @Accessors(prefix = "m")
@@ -46,7 +41,7 @@ public class BeaconFragmentFactory {
 
     private void replaceFragmentInMainContainer(Fragment fragment) {
         if (mSettingsManager.getParentActivity() != null) {
-            FragmentManager fragmentManager = ((ActionBarActivity) mSettingsManager.getParentActivity()).getSupportFragmentManager();
+            FragmentManager fragmentManager = mSettingsManager.getParentActivity().getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(mMainContainerId, fragment)
                     .commit();

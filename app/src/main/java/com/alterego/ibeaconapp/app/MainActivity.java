@@ -1,9 +1,9 @@
 package com.alterego.ibeaconapp.app;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -23,7 +23,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends Activity
         implements IActionBarTitleHandler {
 
     public static final String SAVED_TITLE = "saved_title";
@@ -47,7 +47,7 @@ public class MainActivity extends ActionBarActivity
         mSettingsManager.setParentActivity(this);
         mSettingsManager.setActionBarTitleHandler(this);
 
-        mActionBar = getSupportActionBar();
+        mActionBar = getActionBar();
         mLogger = mSettingsManager.getLogger();
 
         if (savedInstanceState != null) {
@@ -58,7 +58,7 @@ public class MainActivity extends ActionBarActivity
         mSettingsManager.bindBluetooth();
 
         // Set up the drawer.
-        mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
         mConfigOKSubscription = mSettingsManager.getHueBridgeManager().getConfigSubject()
@@ -109,7 +109,7 @@ public class MainActivity extends ActionBarActivity
     };
 
      public void restoreActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         setActionBarTitle(mTitle);

@@ -1,12 +1,9 @@
 package com.alterego.ibeaconapp.app.screens.homewithoutbridge;
 
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import com.alterego.androidbound.ViewModel;
-import com.alterego.ibeaconapp.app.R;
 import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeConfiguration;
-import com.alterego.ibeaconapp.app.api.hue.responses.HueBridgeOperationResponse;
 import com.alterego.ibeaconapp.app.screens.connecttobridge.ConnectUsernameFragment;
 import com.alterego.ibeaconapp.app.api.hue.HueBridgeApiManager;
 import com.alterego.ibeaconapp.app.api.hue.data.HueBridgeInfo;
@@ -114,7 +111,7 @@ public class ViewModelHomeWithoutBridge extends ViewModel {
     public void doOpenBridge(HueBridgeInfo bridgeNuPNPInfo) {
         mSettingsManager.setHueBridgeApiManager(new HueBridgeApiManager(mSettingsManager, bridgeNuPNPInfo.getInternalIPAddress()));
         if (mSettingsManager.getHueBridgeManager().getLastHueBridgeUsername() == null)
-            ConnectUsernameFragment.newInstance(mSettingsManager).show(((ActionBarActivity) mSettingsManager.getParentActivity()).getSupportFragmentManager(), null);
+            ConnectUsernameFragment.newInstance(mSettingsManager).show(mSettingsManager.getParentActivity().getFragmentManager(), null);
         else {
             mLogger.info("doOpenBridge we already have a username = " + mSettingsManager.getHueBridgeManager().getLastHueBridgeUsername());
             setConnectingProgressBarVisible(true);
