@@ -77,4 +77,8 @@ public class HueBridgeConfiguration {
         return Empty.equals(this);
     }
 
+    public boolean isCurrentApiAbove (String minimumApi) {
+        return currentApiVersion.compareTo(minimumApi) > 0;
+    }
+
 }
