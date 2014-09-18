@@ -3,6 +3,9 @@ package com.alterego.ibeaconapp.app.api.hue.requests;
 import com.alterego.ibeaconapp.app.MainApplication;
 import com.alterego.ibeaconapp.app.R;
 
+import lombok.ToString;
+
+@ToString
 public class ConnectUserRequest {
 
     //string 0..40 <application_name>#<devicename>
