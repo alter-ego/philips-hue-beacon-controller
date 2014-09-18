@@ -24,4 +24,5 @@ build/
 .gradle
 .idea
 dist/
-.iml
+IBeaconApp.iml
+

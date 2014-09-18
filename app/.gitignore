@@ -24,4 +24,4 @@ build/
 .gradle
 .idea
 dist/
-.iml
+app.iml
