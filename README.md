@@ -1,6 +1,6 @@
 #Philips Hue Beacon Controller
 
-This is an example of the app that uses iBeacons for home automation control, namely Philips Hue lights. I wanted to see what can be done and how it works on Android because BLE is supported only from 4.3 onwards and iBeacons are not supported natively as such, unlike on iOS.
+This is an example of the Android app that uses iBeacons for home automation control, namely Philips Hue lights. I wanted to see what can be done and how it works on Android because BLE is supported only from 4.3 onwards and iBeacons are not supported natively as such, unlike on iOS.
 
 It is a partial implementation of [Philips Hue API](http://www.developers.meethue.com/documentation/getting-started) and I hope to be able to implement it all.
 
