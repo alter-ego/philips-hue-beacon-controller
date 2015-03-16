@@ -9,6 +9,7 @@ import java.util.Map;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 import rx.Observable;
 
@@ -24,7 +25,6 @@ public interface IHueLightsApi {
      * @return {@link com.alterego.ibeaconapp.app.api.hue.data.HueLight} {@link rx.Observable} Returns a list of lights
      */
     @GET("/api/{username}/lights")
-//    Observable<List<HueLight>> getLights(@Path("username") String username);
     Observable<Map<String, HueLight>> getLights(@Path("username") String username);
 
     /**
@@ -75,5 +75,46 @@ public interface IHueLightsApi {
      */
     @POST("/api/{username}/lights")
     Observable<List<HueBridgeOperationResponse>> searchForNewLights(@Path("username") String username);
+
+    /**
+     * Gets the attributes and state of a given light.
+     *
+     * @param username Username registered with the bridge
+     * @param light_id Id of the light
+     * @return {@link com.alterego.ibeaconapp.app.api.hue.data.HueLight} {@link rx.Observable} Returns the light info and state
+     */
+    @GET("/api/{username}/lights/{id}")
+    Observable<HueLight> getLight(@Path("username") String username, @Path("id") String light_id);
+
+    /**
+     * Used to rename lights. A light can have its name changed when in any state, including when it is unreachable or off.
+     *
+     * @param username Username registered with the bridge
+     * @param light_id Id of the light
+     * @param newLightName The new name for the light. If the name is already taken a space and number will be appended
+     *                       by the bridge e.g. “Bedroom Light 1”. [ max 32 chars ]
+     *
+     * @return {@link com.alterego.ibeaconapp.app.api.hue.responses.HueBridgeOperationResponse}
+     * The response may contain an error or a success map with params inside. In this case, it returns the set light name.
+     * Note: If the new value is too large to return
+     * in the response due to internal memory constraints then a value of “Updated.” is returned.
+     */
+    @PUT("/api/{username}/lights/{id}")
+    Observable<HueBridgeOperationResponse> renameLight (@Path("username") String username, @Path("id") String light_id, @Body Map<String, String> newLightName);
+
+    /**
+     * Allows the user to turn the light on and off, modify the hue and effects.
+     *
+     * @param username Username registered with the bridge
+     * @param light_id Id of the light
+     * @param newLightState The new light state.
+     *
+     * @return {@link com.alterego.ibeaconapp.app.api.hue.responses.HueBridgeOperationResponse}
+     * The response may contain an error or a success map with params inside. In this case, it returns all the set params.
+     * Note: If the new value is too large to return
+     * in the response due to internal memory constraints then a value of “Updated.” is returned.
+     */
+    @PUT("/api/{username}/lights/{id}/state")
+    Observable<HueBridgeOperationResponse> setLightState (@Path("username") String username, @Path("id") String light_id, @Body Map<String, Object> newLightState);
 
 }
