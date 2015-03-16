@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://github.com/alter-ego/advanced-android-logger/raw/develop/releases/"
+    }
     flatDir {
         dirs 'libs'
     }
@@ -51,4 +54,5 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.6.1'
     compile 'de.greenrobot:greendao:1.3.7'
     compile 'com.github.johnpersano:supertoasts:1.3.4@aar'
+    compile 'com.alterego:advancedandroidlogger:1.0.3@aar'
 }
