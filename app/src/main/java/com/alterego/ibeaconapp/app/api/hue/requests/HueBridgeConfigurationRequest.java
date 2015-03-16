@@ -27,7 +27,7 @@ public class HueBridgeConfigurationRequest {
     @Getter @Setter @SerializedName("netmask") public String networkMask;
 
     //Gateway IP address of the bridge.
-    @Getter @Setter @SerializedName("gaeway") public String gatewayIP;
+    @Getter @Setter @SerializedName("gateway") public String gatewayIP;
 
     //Whether the IP address of the bridge is obtained with DHCP.
     @Getter @Setter @SerializedName("dhcp") public boolean isAddressObtainedViaDHCP;
